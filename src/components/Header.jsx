@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
-const HeaderContainer = styled.div`
+const HeaderContainer = styled.nav`
   display: flex;
   padding: 2rem 4rem;
   justify-content: space-between;
