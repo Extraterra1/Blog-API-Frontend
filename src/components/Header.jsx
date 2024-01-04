@@ -3,7 +3,7 @@ import styled from 'styled-components';
 
 const HeaderContainer = styled.nav`
   display: flex;
-  padding: 2rem 4rem;
+  padding: 2rem 8rem;
   justify-content: space-between;
   font-size: 1.5rem;
   align-items: center;
@@ -16,7 +16,6 @@ const HeaderContainer = styled.nav`
 const ButtonsContainer = styled.div`
   display: flex;
   gap: 2rem;
-  margin-right: 4rem;
 `;
 
 const Header = () => {
