@@ -11,7 +11,7 @@ const Hero = styled.section`
   background-position: center;
   display: grid;
   place-items: center;
-
+  font-family: 'Rubik Doodle Shadow';
   & .title {
     background-color: rgba(33, 37, 41, 0.7);
     padding: 3rem 3rem;
@@ -21,8 +21,29 @@ const Hero = styled.section`
   }
 `;
 
-const PostsGrid = styled.section`
-  padding: 2rem 8rem;
+const PostsContainer = styled.section`
+  padding: 3rem 8rem;
+`;
+
+const PostsHeader = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-bottom: 3rem;
+
+  & h4 {
+    font-size: 2rem;
+    font-weight: 700;
+  }
+
+  & p {
+    font-size: 1.3rem;
+    font-weight: 400;
+  }
+`;
+
+const PostsGrid = styled.div`
+  font-family: 'Playfair Display';
   gap: 3rem;
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(40rem, 1fr));
@@ -35,11 +56,17 @@ const Landing = () => {
       <Hero>
         <div className="title">No REST For The Wicked</div>
       </Hero>
-      <PostsGrid>
-        {blogPosts.map((e) => (
-          <Card key={e.id} post={e} />
-        ))}
-      </PostsGrid>
+      <PostsContainer>
+        <PostsHeader>
+          <h4>Blog Posts</h4>
+          <p>Take a look at our original and totally not AI generated blog posts.</p>
+        </PostsHeader>
+        <PostsGrid>
+          {blogPosts.map((e) => (
+            <Card key={e.id} post={e} />
+          ))}
+        </PostsGrid>
+      </PostsContainer>
     </>
   );
 };

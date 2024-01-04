@@ -8,16 +8,16 @@ const CardContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 2rem;
+  padding: 2rem 0;
   width: 100%;
   border-radius: 0.5rem;
   color: #3e3e3e;
-  font-family: 'Open Sans';
 
   & > .content {
     display: grid;
     grid-template-rows: 40rem auto auto;
     height: 100%;
+    gap: 2rem;
     align-items: center;
   }
 
@@ -39,12 +39,15 @@ const CardContainer = styled.div`
 
   & > .content > .title {
     margin-top: 2rem;
-    font-size: 1.3rem;
+    font-size: 1.7rem;
     text-align: center;
+    & h2 {
+      font-weight: 500;
+    }
   }
 
   & > .content > .desc {
-    font-size: 1.2rem;
+    font-size: 1.4rem;
     margin-top: 1rem;
     max-width: 90ch;
     display: flex;

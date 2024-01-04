@@ -5,8 +5,9 @@ const HeaderContainer = styled.nav`
   display: flex;
   padding: 2rem 8rem;
   justify-content: space-between;
-  font-size: 1.5rem;
+  font-size: 2rem;
   align-items: center;
+  font-family: 'Oswald';
   & .title {
     font-size: 3rem;
     font-weight: 700;
