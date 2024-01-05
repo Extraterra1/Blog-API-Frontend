@@ -79,7 +79,7 @@ const Landing = () => {
           </PostsHeader>
           {loading && <ClipLoader />}
           <PostsGrid>{data && data.posts.map((e) => <Card key={e.id} post={e} />)}</PostsGrid>
-          {!data && <ErrorMessage>Nothing to see here...</ErrorMessage>}
+          {!data && !loading && <ErrorMessage>Nothing to see here...</ErrorMessage>}
         </PostsContainer>
         <Toaster />
       </main>
