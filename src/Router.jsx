@@ -7,6 +7,10 @@ const Router = () => {
     {
       path: '/',
       element: <Landing />
+    },
+    {
+      path: '/posts',
+      element: <Landing />
     }
   ]);
   return <RouterProvider router={router} />;

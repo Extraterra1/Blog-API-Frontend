@@ -84,7 +84,8 @@ button:focus-visible {
 #root {
   min-height: inherit;
   display: grid;
-  grid-template-rows: auto 1fr auto;
+  grid-template-rows: auto 1fr;
+  grid-auto-rows: 1fr;
 }
 
 @media (prefers-color-scheme: light) {
