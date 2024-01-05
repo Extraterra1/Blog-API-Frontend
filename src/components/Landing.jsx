@@ -77,7 +77,7 @@ const Landing = () => {
             <h4>Blog Posts</h4>
             <p>Take a look at our original and totally not AI generated blog posts.</p>
           </PostsHeader>
-          {loading && <ClipLoader />}
+          <ClipLoader loading={loading} size={100} cssOverride={{ margin: '3rem auto', display: 'block' }} />
           <PostsGrid>{data && data.posts.map((e) => <Card key={e.id} post={e} />)}</PostsGrid>
           {!data && !loading && <ErrorMessage>Nothing to see here...</ErrorMessage>}
         </PostsContainer>
