@@ -59,7 +59,7 @@ const PostsGrid = styled.div`
 
 const Landing = () => {
   const [{ data, loading, error }] = useAxios({
-    url: 'http://localhost:3000/api/possts',
+    url: 'http://localhost:3000/api/posts',
     method: 'GET'
   });
 
@@ -67,20 +67,22 @@ const Landing = () => {
 
   return (
     <>
-      <Header />
-      <Hero>
-        <div className="title">No REST For The Wicked</div>
-      </Hero>
-      <PostsContainer>
-        <PostsHeader>
-          <h4>Blog Posts</h4>
-          <p>Take a look at our original and totally not AI generated blog posts.</p>
-        </PostsHeader>
-        {loading && <ClipLoader />}
-        <PostsGrid>{data && data.posts.map((e) => <Card key={e.id} post={e} />)}</PostsGrid>
-        {!data && <ErrorMessage>Nothing to see here...</ErrorMessage>}
-      </PostsContainer>
-      <Toaster />
+      <main>
+        <Header />
+        <Hero>
+          <div className="title">No REST For The Wicked</div>
+        </Hero>
+        <PostsContainer>
+          <PostsHeader>
+            <h4>Blog Posts</h4>
+            <p>Take a look at our original and totally not AI generated blog posts.</p>
+          </PostsHeader>
+          {loading && <ClipLoader />}
+          <PostsGrid>{data && data.posts.map((e) => <Card key={e.id} post={e} />)}</PostsGrid>
+          {!data && <ErrorMessage>Nothing to see here...</ErrorMessage>}
+        </PostsContainer>
+        <Toaster />
+      </main>
     </>
   );
 };
