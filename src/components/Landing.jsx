@@ -81,7 +81,7 @@ const Landing = () => {
           <PostsGrid>{data && data.posts.map((e) => <Card key={e.id} post={e} />)}</PostsGrid>
           {!data && !loading && <ErrorMessage>Nothing to see here...</ErrorMessage>}
         </PostsContainer>
-        <Toaster />
+        <Toaster toastOptions={{ style: { fontSize: '1.5rem', fontWeight: '400', fontFamily: 'Oswald' } }} />
       </main>
     </>
   );
