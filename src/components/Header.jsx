@@ -23,7 +23,9 @@ const Header = () => {
   return (
     <>
       <HeaderContainer>
-        <div className="title">RESTless Blogging</div>
+        <Link to="/">
+          <div className="title">RESTless Blogging</div>
+        </Link>
         <ButtonsContainer>
           <Link to="/posts">Blog Posts</Link>
           <Link to="/login">Log In</Link>
