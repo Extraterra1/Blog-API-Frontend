@@ -5,6 +5,8 @@ import useAxios from 'axios-hooks';
 import { ClipLoader } from 'react-spinners';
 import * as Yup from 'yup';
 import useSignIn from 'react-auth-kit/hooks/useSignIn';
+import useIsAuthenticated from 'react-auth-kit/hooks/useIsAuthenticated';
+import { Navigate } from 'react-router-dom';
 
 const FormWrapper = styled.div`
   display: grid;
@@ -97,6 +99,7 @@ PasswordInput.propTypes = {
 
 const LoginForm = () => {
   const signIn = useSignIn();
+  const isAuthenticated = useIsAuthenticated();
   const [{ data, loading, error }, executeLogin] = useAxios({ url: 'http://192.168.0.101:3000/api/login', method: 'POST' }, { manual: true });
 
   if (data) {
@@ -120,6 +123,7 @@ const LoginForm = () => {
 
   return (
     <>
+      {isAuthenticated() && <Navigate to="/?logged" />}
       <Formik
         initialValues={{
           username: '',
