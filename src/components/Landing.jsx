@@ -78,7 +78,7 @@ const Landing = () => {
             <p>Take a look at our original and totally not AI generated blog posts.</p>
           </PostsHeader>
           <ClipLoader loading={loading} size={100} cssOverride={{ margin: '3rem auto', display: 'block' }} />
-          <PostsGrid>{data && data.posts.map((e) => <Card key={e.id} post={e} />)}</PostsGrid>
+          <PostsGrid>{data && data.posts.map((e) => <Card key={e._id} post={e} />)}</PostsGrid>
           {!data && !loading && <ErrorMessage>Nothing to see here...</ErrorMessage>}
         </PostsContainer>
         <Toaster toastOptions={{ style: { fontSize: '1.5rem', fontWeight: '400', fontFamily: 'Oswald' } }} />

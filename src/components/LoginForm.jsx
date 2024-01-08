@@ -51,6 +51,12 @@ const ErrorMessage = styled.div`
   font-weight: 500;
 `;
 
+const BadLogin = styled.span`
+  color: var(--danger);
+  font-size: 1.7rem;
+  margin-bottom: 2rem;
+`;
+
 const formCSS = {
   padding: '5rem',
   backgroundColor: 'var(--light)',
@@ -114,7 +120,7 @@ const LoginForm = () => {
 
   const handleSubmit = async (values, { setSubmitting }) => {
     try {
-      executeLogin({ data: { username: values.username, password: values.password } });
+      await executeLogin({ data: { username: values.username, password: values.password } });
       setSubmitting(false);
     } catch (err) {
       console.log(err.message);
@@ -137,6 +143,11 @@ const LoginForm = () => {
       >
         <FormWrapper>
           <Form style={formCSS}>
+            {error && error?.response?.status === 401 ? (
+              <BadLogin>Incorrect Username/Password</BadLogin>
+            ) : error ? (
+              <BadLogin>Something went wrong</BadLogin>
+            ) : null}
             <UsernameInput label="Username or Email" name="username" type="text" placeholder="johndoe@gmail.com" />
             <PasswordInput label="Password" name="password" type="password" />
             <SubmitButton type="submit">Log In</SubmitButton>
