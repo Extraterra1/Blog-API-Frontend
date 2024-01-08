@@ -76,7 +76,7 @@ const Card = ({ post }) => {
           <img src={images[Math.floor(Math.random() * 6)]} alt="" />
         </div>
         <div className="title">
-          <Link to={`/posts/${post.id}`}>
+          <Link to={`/posts/${post._id}`}>
             <h2>{post.title}</h2>
           </Link>
         </div>
