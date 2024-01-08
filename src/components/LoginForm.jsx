@@ -2,7 +2,9 @@ import { Formik, Form, useField } from 'formik';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import useAxios from 'axios-hooks';
+import { ClipLoader } from 'react-spinners';
 import * as Yup from 'yup';
+import useSignIn from 'react-auth-kit/hooks/useSignIn';
 
 const FormWrapper = styled.div`
   display: grid;
@@ -53,7 +55,8 @@ const formCSS = {
   border: '1px solid var(--dark)',
   borderRadius: '.5rem',
   display: 'flex',
-  flexDirection: 'column'
+  flexDirection: 'column',
+  alignItems: 'center'
 };
 
 const UsernameInput = ({ label, ...props }) => {
@@ -92,12 +95,29 @@ PasswordInput.propTypes = {
   name: PropTypes.string
 };
 
-const handleSubmit = (values, { setSubmitting }) => {
-  alert(JSON.stringify(values));
-  setSubmitting(false);
-};
-
 const LoginForm = () => {
+  const signIn = useSignIn();
+  const [{ data, loading, error }, executeLogin] = useAxios({ url: 'http://192.168.0.101:3000/api/login', method: 'POST' }, { manual: true });
+
+  if (data) {
+    signIn({
+      auth: {
+        token: data.token,
+        type: 'Bearer'
+      },
+      userState: data.user
+    });
+  }
+
+  const handleSubmit = async (values, { setSubmitting }) => {
+    try {
+      executeLogin({ data: { username: values.username, password: values.password } });
+      setSubmitting(false);
+    } catch (err) {
+      console.log(err.message);
+    }
+  };
+
   return (
     <>
       <Formik
@@ -116,6 +136,7 @@ const LoginForm = () => {
             <UsernameInput label="Username or Email" name="username" type="text" placeholder="johndoe@gmail.com" />
             <PasswordInput label="Password" name="password" type="password" />
             <SubmitButton type="submit">Log In</SubmitButton>
+            <ClipLoader loading={loading} />
           </Form>
         </FormWrapper>
       </Formik>
