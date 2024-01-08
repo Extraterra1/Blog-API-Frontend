@@ -6,7 +6,7 @@ import './index.css';
 
 WebFont.load({
   google: {
-    families: ['Oswald:400,700', 'Rubik Doodle Shadow:400', 'Playfair Display:400,500,700']
+    families: ['Oswald:300,400,700', 'Rubik Doodle Shadow:400', 'Playfair Display:400,500,700']
   }
 });
 

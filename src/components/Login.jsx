@@ -4,8 +4,8 @@ import LoginForm from './LoginForm';
 const Login = () => {
   return (
     <>
+      <Header />
       <main>
-        <Header />
         <LoginForm />
       </main>
     </>

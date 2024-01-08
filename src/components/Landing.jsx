@@ -67,8 +67,8 @@ const Landing = () => {
 
   return (
     <>
+      <Header />
       <main>
-        <Header />
         <Hero>
           <div className="title">No REST For The Wicked</div>
         </Hero>
