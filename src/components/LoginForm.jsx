@@ -1,12 +1,14 @@
 import { Formik, Form, useField } from 'formik';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
+import useAxios from 'axios-hooks';
+import * as Yup from 'yup';
 
 const FormWrapper = styled.div`
   display: grid;
   place-items: center;
   height: 100%;
-  background-color: #dfe0e1;
+  background-color: #3e3e3e;
 `;
 
 const FormGroup = styled.div`
@@ -39,6 +41,12 @@ const SubmitButton = styled.button`
   margin-top: 2rem;
 `;
 
+const ErrorMessage = styled.div`
+  color: var(--danger);
+  font-size: 1.2rem;
+  font-weight: 500;
+`;
+
 const formCSS = {
   padding: '5rem',
   backgroundColor: 'var(--light)',
@@ -55,7 +63,7 @@ const UsernameInput = ({ label, ...props }) => {
       <FormGroup>
         <label htmlFor={props.id || props.name}>{label}</label>
         <input {...field} {...props} />
-        {meta.touched && meta.error ? <div>{meta.error}</div> : null}
+        {meta.touched && meta.error ? <ErrorMessage>{meta.error}</ErrorMessage> : null}
       </FormGroup>
     </>
   );
@@ -73,7 +81,7 @@ const PasswordInput = ({ label, ...props }) => {
       <FormGroup>
         <label htmlFor={props.id || props.name}>{label}</label>
         <input {...field} {...props} />
-        {meta.touched && meta.error ? <div>{meta.error}</div> : null}
+        {meta.touched && meta.error ? <ErrorMessage>{meta.error}</ErrorMessage> : null}
       </FormGroup>
     </>
   );
@@ -84,6 +92,11 @@ PasswordInput.propTypes = {
   name: PropTypes.string
 };
 
+const handleSubmit = (values, { setSubmitting }) => {
+  alert(JSON.stringify(values));
+  setSubmitting(false);
+};
+
 const LoginForm = () => {
   return (
     <>
@@ -92,10 +105,11 @@ const LoginForm = () => {
           username: '',
           password: ''
         }}
-        onSubmit={(values, { setSubmitting }) => {
-          alert(JSON.stringify(values));
-          setSubmitting(false);
-        }}
+        validationSchema={Yup.object({
+          username: Yup.string().required('Required'),
+          password: Yup.string().required('Required')
+        })}
+        onSubmit={handleSubmit}
       >
         <FormWrapper>
           <Form style={formCSS}>
