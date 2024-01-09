@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import useAxios from 'axios-hooks';
 import * as Yup from 'yup';
-import { Navigate, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { Toaster, toast } from 'react-hot-toast';
 import useSignIn from 'react-auth-kit/hooks/useSignIn';
 
@@ -128,9 +128,10 @@ PasswordInput.propTypes = {
 
 const RegisterForm = () => {
   const signIn = useSignIn();
-  const [{ data }, executeLogin] = useAxios({ url: 'http://192.168.0.101:300/api/login', method: 'POST' }, { manual: true });
+  const [{ data }, executeRegister] = useAxios({ url: 'http://192.168.0.101:3000/api/register', method: 'POST' }, { manual: true });
 
   if (data) {
+    console.log(data);
     signIn({
       auth: {
         token: data.token,
@@ -143,11 +144,11 @@ const RegisterForm = () => {
   const handleSubmit = async (values, { setSubmitting }) => {
     try {
       toast.promise(
-        executeLogin({ data: { username: values.username, password: values.password } }),
+        executeRegister({ data: { username: values.username, email: values.email, password: values.password } }),
         {
           loading: 'Logging in...',
           success: 'Logged In! Redirecting...',
-          error: (err) => (err.response ? 'Wrong Username/Password' : 'Something went wrong')
+          error: 'Something went wrong'
         },
         {
           style: {
