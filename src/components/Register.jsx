@@ -2,6 +2,7 @@ import { Navigate } from 'react-router-dom';
 import useIsAuthenticated from 'react-auth-kit/hooks/useIsAuthenticated';
 
 import Header from './Header';
+import RegisterForm from './RegisterForm';
 
 const Register = () => {
   const isAuthenticated = useIsAuthenticated();
@@ -9,7 +10,9 @@ const Register = () => {
     <>
       {isAuthenticated() ? <Navigate to="/" /> : null}
       <Header />
-      <main />
+      <main>
+        <RegisterForm />
+      </main>
     </>
   );
 };
