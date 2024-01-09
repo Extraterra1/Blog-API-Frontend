@@ -144,7 +144,8 @@ const LoginForm = () => {
           },
           error: {
             duration: 5000
-          }
+          },
+          id: 'loginAttempt'
         }
       );
       setSubmitting(false);
