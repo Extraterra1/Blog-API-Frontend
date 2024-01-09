@@ -1,5 +1,8 @@
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
+import useIsAuthenticated from 'react-auth-kit/hooks/useIsAuthenticated';
+
+import UserDisplay from './UserDisplay';
 
 const HeaderContainer = styled.nav`
   display: flex;
@@ -20,6 +23,7 @@ const ButtonsContainer = styled.div`
 `;
 
 const Header = () => {
+  const isAuthenticated = useIsAuthenticated();
   return (
     <>
       <HeaderContainer>
@@ -28,7 +32,7 @@ const Header = () => {
         </Link>
         <ButtonsContainer>
           <Link to="/posts">Blog Posts</Link>
-          <Link to="/login">Log In</Link>
+          {isAuthenticated() ? <UserDisplay /> : <Link to="/login">Log In</Link>}
         </ButtonsContainer>
       </HeaderContainer>
     </>
