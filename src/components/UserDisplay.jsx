@@ -2,6 +2,7 @@ import { Icon } from '@iconify/react';
 import useAuthUser from 'react-auth-kit/hooks/useAuthUser';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
 
 const UserInfo = styled.div`
   display: flex;
@@ -16,7 +17,7 @@ const LogOut = styled.span`
   }
 `;
 
-const UserDisplay = () => {
+const UserDisplay = ({ handleSignOut }) => {
   const user = useAuthUser();
   return (
     <>
@@ -26,9 +27,13 @@ const UserDisplay = () => {
           <Icon icon="ph:user-fill" />
         </UserInfo>
       </Link>
-      <LogOut>Log Out</LogOut>
+      <LogOut onClick={handleSignOut}>Log Out</LogOut>
     </>
   );
+};
+
+UserDisplay.propTypes = {
+  handleSignOut: PropTypes.func
 };
 
 export default UserDisplay;

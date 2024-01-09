@@ -142,7 +142,7 @@ const LoginForm = () => {
 
   return (
     <>
-      {isAuthenticated() && <Navigate to="/?logged" />}
+      {isAuthenticated() && <Navigate to="/" />}
       <Toaster />
       <Formik
         initialValues={{
