@@ -5,7 +5,7 @@ import useAxios from 'axios-hooks';
 import * as Yup from 'yup';
 import useSignIn from 'react-auth-kit/hooks/useSignIn';
 import useIsAuthenticated from 'react-auth-kit/hooks/useIsAuthenticated';
-import { Navigate } from 'react-router-dom';
+import { Navigate, Link } from 'react-router-dom';
 import { Toaster, toast } from 'react-hot-toast';
 
 const FormWrapper = styled.div`
@@ -49,6 +49,19 @@ const ErrorMessage = styled.div`
   color: var(--danger);
   font-size: 1.2rem;
   font-weight: 500;
+`;
+
+const RegisterLink = styled(Link)`
+  font-size: 1.5rem;
+  margin-top: 2rem;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  transition: all 0.3s ease;
+
+  &:hover {
+    color: var(--dark-hover);
+    text-underline-offset: 5px;
+  }
 `;
 
 const formCSS = {
@@ -160,6 +173,7 @@ const LoginForm = () => {
             <UsernameInput label="Username or Email" name="username" type="text" placeholder="johndoe@gmail.com" />
             <PasswordInput label="Password" name="password" type="password" />
             <SubmitButton type="submit">Log In</SubmitButton>
+            <RegisterLink to="/register">New to our site? Create an account</RegisterLink>
           </Form>
         </FormWrapper>
       </Formik>
