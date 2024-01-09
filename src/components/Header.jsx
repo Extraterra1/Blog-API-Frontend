@@ -15,6 +15,9 @@ const HeaderContainer = styled.nav`
     font-size: 3rem;
     font-weight: 700;
   }
+  & > *:hover {
+    color: var(--dark-hover);
+  }
 `;
 
 const ButtonsContainer = styled.div`

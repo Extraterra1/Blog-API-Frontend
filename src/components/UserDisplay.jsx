@@ -11,6 +11,9 @@ const UserInfo = styled.div`
 
 const LogOut = styled.span`
   cursor: pointer;
+  &:hover {
+    color: var(--dark-hover);
+  }
 `;
 
 const UserDisplay = () => {
