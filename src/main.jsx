@@ -23,7 +23,7 @@ WebFont.load({
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <AuthProvider store={store}>
-      <Toaster toastOptions={{ style: { fontSize: '1.5rem', fontWeight: '400', fontFamily: 'Oswald' } }} />
+      <Toaster toastOptions={{ style: { fontSize: '1.5rem', fontWeight: '400', fontFamily: 'Oswald', marginTop: '3rem' } }} />
       <Router />
     </AuthProvider>
   </React.StrictMode>

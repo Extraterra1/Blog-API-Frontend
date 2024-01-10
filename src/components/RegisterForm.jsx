@@ -149,8 +149,8 @@ const RegisterForm = () => {
       toast.promise(
         executeRegister({ data: { username: values.username, email: values.email, password: values.password } }),
         {
-          loading: 'Logging in...',
-          success: 'Logged In! Redirecting...',
+          loading: 'Creating Account...',
+          success: 'Account Created! Redirecting...',
           error: 'Something went wrong'
         },
         {
