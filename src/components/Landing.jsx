@@ -59,7 +59,7 @@ const PostsGrid = styled.div`
 
 const Landing = () => {
   const [{ data, loading, error }] = useAxios({
-    url: 'http://192.168.0.101:3000/api/posts',
+    url: 'https://project-blog-api.fly.dev/api/posts',
     method: 'GET'
   });
 

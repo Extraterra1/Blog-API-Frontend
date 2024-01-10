@@ -128,7 +128,7 @@ PasswordInput.propTypes = {
 
 const RegisterForm = () => {
   const signIn = useSignIn();
-  const [{ data }, executeRegister] = useAxios({ url: 'http://192.168.0.101:3000/api/register', method: 'POST' }, { manual: true });
+  const [{ data }, executeRegister] = useAxios({ url: 'https://project-blog-api.fly.dev/api/register', method: 'POST' }, { manual: true });
 
   if (data) {
     console.log(data);
