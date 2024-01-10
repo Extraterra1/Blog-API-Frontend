@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import useAxios from 'axios-hooks';
 import { ClipLoader } from 'react-spinners';
-import { Toaster, toast } from 'react-hot-toast';
+import { toast } from 'react-hot-toast';
 
 import Header from './Header';
 import Card from './Card';
@@ -81,7 +81,6 @@ const Landing = () => {
           <PostsGrid>{data && data.posts.map((e) => <Card key={e._id} post={e} />)}</PostsGrid>
           {!data && !loading && <ErrorMessage>Nothing to see here...</ErrorMessage>}
         </PostsContainer>
-        <Toaster toastOptions={{ style: { fontSize: '1.5rem', fontWeight: '400', fontFamily: 'Oswald' } }} />
       </main>
     </>
   );

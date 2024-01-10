@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import useIsAuthenticated from 'react-auth-kit/hooks/useIsAuthenticated';
 import useSignOut from 'react-auth-kit/hooks/useSignOut';
-import { Toaster, toast } from 'react-hot-toast';
+import { toast } from 'react-hot-toast';
 
 import UserDisplay from './UserDisplay';
 
@@ -43,7 +43,6 @@ const Header = () => {
 
   return (
     <>
-      <Toaster />
       <HeaderContainer>
         <Link to="/">
           <div className="title">RESTless Blogging</div>

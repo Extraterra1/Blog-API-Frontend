@@ -4,6 +4,7 @@ import Router from './router';
 import WebFont from 'webfontloader';
 import createStore from 'react-auth-kit/createStore';
 import AuthProvider from 'react-auth-kit/AuthProvider';
+import { Toaster } from 'react-hot-toast';
 import './index.css';
 
 const store = createStore({
@@ -22,6 +23,7 @@ WebFont.load({
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <AuthProvider store={store}>
+      <Toaster toastOptions={{ style: { fontSize: '1.5rem', fontWeight: '400', fontFamily: 'Oswald' } }} />
       <Router />
     </AuthProvider>
   </React.StrictMode>

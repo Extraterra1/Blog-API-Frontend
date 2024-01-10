@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import useAxios from 'axios-hooks';
 import * as Yup from 'yup';
 import { Link, Navigate } from 'react-router-dom';
-import { Toaster, toast } from 'react-hot-toast';
+import { toast } from 'react-hot-toast';
 import useSignIn from 'react-auth-kit/hooks/useSignIn';
 import useIsAuthenticated from 'react-auth-kit/hooks/useIsAuthenticated';
 
@@ -175,11 +175,12 @@ const RegisterForm = () => {
   return (
     <>
       {isAuthenticated() ? <Navigate to="/" /> : null}
-      <Toaster />
       <Formik
         initialValues={{
           username: '',
-          password: ''
+          email: '',
+          password: '',
+          confirmPassword: ''
         }}
         validationSchema={Yup.object({
           username: Yup.string()

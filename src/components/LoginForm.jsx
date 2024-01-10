@@ -6,7 +6,7 @@ import * as Yup from 'yup';
 import useSignIn from 'react-auth-kit/hooks/useSignIn';
 import useIsAuthenticated from 'react-auth-kit/hooks/useIsAuthenticated';
 import { Navigate, Link } from 'react-router-dom';
-import { Toaster, toast } from 'react-hot-toast';
+import { toast } from 'react-hot-toast';
 
 const FormWrapper = styled.div`
   display: grid;
@@ -157,7 +157,6 @@ const LoginForm = () => {
   return (
     <>
       {isAuthenticated() && <Navigate to="/" />}
-      <Toaster />
       <Formik
         initialValues={{
           username: '',
