@@ -3,9 +3,10 @@ import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import useAxios from 'axios-hooks';
 import * as Yup from 'yup';
-import { Link } from 'react-router-dom';
+import { Link, Navigate } from 'react-router-dom';
 import { Toaster, toast } from 'react-hot-toast';
 import useSignIn from 'react-auth-kit/hooks/useSignIn';
+import useIsAuthenticated from 'react-auth-kit/hooks/useIsAuthenticated';
 
 const FormWrapper = styled.div`
   display: grid;
@@ -75,6 +76,7 @@ const formCSS = {
 
 const UsernameInput = ({ label, ...props }) => {
   const [field, meta] = useField(props);
+
   return (
     <>
       <FormGroup>
@@ -128,6 +130,7 @@ PasswordInput.propTypes = {
 
 const RegisterForm = () => {
   const signIn = useSignIn();
+  const isAuthenticated = useIsAuthenticated();
   const [{ data }, executeRegister] = useAxios({ url: 'https://project-blog-api.fly.dev/api/register', method: 'POST' }, { manual: true });
 
   if (data) {
@@ -171,6 +174,7 @@ const RegisterForm = () => {
 
   return (
     <>
+      {isAuthenticated() ? <Navigate to="/" /> : null}
       <Toaster />
       <Formik
         initialValues={{
