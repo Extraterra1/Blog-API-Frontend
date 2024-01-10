@@ -1,8 +1,7 @@
-import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-import useIsAuthenticated from 'react-auth-kit/hooks/useIsAuthenticated';
-import useSignOut from 'react-auth-kit/hooks/useSignOut';
+import { useIsAuthenticated, useSignOut } from 'react-auth-kit';
+
 import { toast } from 'react-hot-toast';
 
 import UserDisplay from './UserDisplay';
@@ -31,13 +30,11 @@ const ButtonsContainer = styled.div`
 const Header = () => {
   const isAuthenticated = useIsAuthenticated();
   const signOut = useSignOut();
-  const [logged, setLogged] = useState(isAuthenticated());
 
   const handleSignOut = () => {
     const logOut = signOut();
     if (logOut) {
       toast.success('Logged Out!');
-      setLogged(isAuthenticated());
     }
   };
 
@@ -49,7 +46,7 @@ const Header = () => {
         </Link>
         <ButtonsContainer>
           <Link to="/posts">Blog Posts</Link>
-          {logged ? <UserDisplay handleSignOut={handleSignOut} /> : <Link to="/login">Log In</Link>}
+          {isAuthenticated() ? <UserDisplay handleSignOut={handleSignOut} /> : <Link to="/login">Log In</Link>}
         </ButtonsContainer>
       </HeaderContainer>
     </>

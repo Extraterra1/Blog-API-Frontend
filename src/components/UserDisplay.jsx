@@ -1,5 +1,5 @@
 import { Icon } from '@iconify/react';
-import useAuthUser from 'react-auth-kit/hooks/useAuthUser';
+import { useAuthUser } from 'react-auth-kit';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
@@ -23,7 +23,7 @@ const UserDisplay = ({ handleSignOut }) => {
     <>
       <Link to="/user">
         <UserInfo>
-          <span>{user.username}</span>
+          <span>{user().username}</span>
           <Icon icon="ph:user-fill" />
         </UserInfo>
       </Link>

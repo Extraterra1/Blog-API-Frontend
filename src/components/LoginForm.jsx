@@ -3,8 +3,7 @@ import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import useAxios from 'axios-hooks';
 import * as Yup from 'yup';
-import useSignIn from 'react-auth-kit/hooks/useSignIn';
-import useIsAuthenticated from 'react-auth-kit/hooks/useIsAuthenticated';
+import { useSignIn, useIsAuthenticated } from 'react-auth-kit';
 import { Navigate, Link } from 'react-router-dom';
 import { toast } from 'react-hot-toast';
 
@@ -117,11 +116,10 @@ const LoginForm = () => {
 
   if (data) {
     signIn({
-      auth: {
-        token: data.token,
-        type: 'Bearer'
-      },
-      userState: data.user
+      token: data.token,
+      type: 'Bearer',
+      authState: data.user,
+      expiresIn: 60
     });
   }
 

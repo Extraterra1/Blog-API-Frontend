@@ -1,18 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import Router from './router';
-import WebFont from 'webfontloader';
-import createStore from 'react-auth-kit/createStore';
-import AuthProvider from 'react-auth-kit/AuthProvider';
-import { Toaster } from 'react-hot-toast';
-import './index.css';
+import { AuthProvider } from 'react-auth-kit';
 
-const store = createStore({
-  authName: '_auth',
-  authType: 'cookie',
-  cookieDomain: window.location.hostname,
-  cookieSecure: window.location.protocol === 'https:'
-});
+import WebFont from 'webfontloader';
+import { Toaster } from 'react-hot-toast';
+
+import './index.css';
 
 WebFont.load({
   google: {
@@ -22,7 +16,7 @@ WebFont.load({
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <AuthProvider store={store}>
+    <AuthProvider authType="cookie" authName="_auth" cookieDomain={window.location.hostname}>
       <Toaster toastOptions={{ style: { fontSize: '1.5rem', fontWeight: '400', fontFamily: 'Oswald', marginTop: '3rem' } }} />
       <Router />
     </AuthProvider>

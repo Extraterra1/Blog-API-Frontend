@@ -10,13 +10,14 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@auth-kit/react-router": "^3.0.2-alpha.0",
     "@iconify/react": "^4.1.1",
     "axios": "^1.6.5",
     "axios-hooks": "^5.0.2",
     "formik": "^2.4.5",
     "prop-types": "^15.8.1",
     "react": "^18.2.0",
-    "react-auth-kit": "^3.0.0",
+    "react-auth-kit": "^2.12.7",
     "react-dom": "^18.2.0",
     "react-hot-toast": "^2.4.1",
     "react-router-dom": "^6.21.1",

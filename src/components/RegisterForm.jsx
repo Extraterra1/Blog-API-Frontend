@@ -5,8 +5,7 @@ import useAxios from 'axios-hooks';
 import * as Yup from 'yup';
 import { Link, Navigate } from 'react-router-dom';
 import { toast } from 'react-hot-toast';
-import useSignIn from 'react-auth-kit/hooks/useSignIn';
-import useIsAuthenticated from 'react-auth-kit/hooks/useIsAuthenticated';
+import { useSignIn, useIsAuthenticated } from 'react-auth-kit';
 
 const FormWrapper = styled.div`
   display: grid;
@@ -134,13 +133,11 @@ const RegisterForm = () => {
   const [{ data }, executeRegister] = useAxios({ url: 'https://project-blog-api.fly.dev/api/register', method: 'POST' }, { manual: true });
 
   if (data) {
-    console.log(data);
     signIn({
-      auth: {
-        token: data.token,
-        type: 'Bearer'
-      },
-      userState: data.user
+      token: data.token,
+      type: 'Bearer',
+      authState: data.user,
+      expiresIn: 60
     });
   }
 
