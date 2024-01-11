@@ -46,10 +46,7 @@ const Header = () => {
         <Link to="/">
           <div className="title">RESTless Blogging</div>
         </Link>
-        <ButtonsContainer>
-          <Link to="/posts">Blog Posts</Link>
-          {isAuthenticated() ? <UserDisplay handleSignOut={handleSignOut} /> : <Link to="/login">Log In</Link>}
-        </ButtonsContainer>
+        <ButtonsContainer>{isAuthenticated() ? <UserDisplay handleSignOut={handleSignOut} /> : <Link to="/login">Log In</Link>}</ButtonsContainer>
       </HeaderContainer>
     </>
   );
