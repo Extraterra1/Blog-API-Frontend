@@ -124,7 +124,7 @@ const CreatePostBtn = styled.button`
 
 // TODO: Fetch blog posts
 const blogPosts = [
-  { id: '65a01fcdfc91c61eb0f106dd', title: 'The Future of Artificial Intelligence: Trends and Breakthroughs' },
+  { id: '65a0204afc91c61eb0f106de', title: 'The Future of Artificial Intelligence: Trends and Breakthroughs' },
   { id: 2, title: "Demystifying Blockchain: How It's Reshaping Industries" },
   { id: 3, title: 'Exploring the Quantum Frontier: Quantum Computing Unveiled' },
   { id: 4, title: '5G Revolution: Transforming Connectivity and Beyond' },
