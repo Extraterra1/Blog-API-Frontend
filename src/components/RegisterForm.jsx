@@ -135,7 +135,7 @@ const RegisterForm = () => {
   if (data) {
     signIn({
       token: data.token,
-      type: 'Bearer',
+      tokenType: 'Bearer',
       authState: data.user,
       expiresIn: 60
     });

@@ -1,7 +1,8 @@
 import Modal from 'react-modal';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-
+import useAxios from 'axios-hooks';
+import { useAuthHeader } from 'react-auth-kit';
 const CreatePostBtn = styled.button`
   font-size: 2rem;
   background-color: var(--success);
@@ -48,6 +49,13 @@ const modalStyles = {
 Modal.setAppElement('#root');
 
 const StyledModal = ({ isOpen, closeModal, item }) => {
+  const [{ data }, deletePost] = useAxios(
+    { url: `https://project-blog-api.fly.dev/api/posts/${item.id}`, method: 'DELETE', headers: { Authorization: `sds` } },
+    { manual: true }
+  );
+  const authHeader = useAuthHeader();
+  console.log(authHeader());
+
   return (
     <Modal isOpen={isOpen} onRequestClose={closeModal} style={modalStyles}>
       <ModalContainer>
