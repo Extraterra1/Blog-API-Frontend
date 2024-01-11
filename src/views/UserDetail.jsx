@@ -2,6 +2,8 @@ import styled from 'styled-components';
 import { useAuthUser } from 'react-auth-kit';
 import { Icon } from '@iconify/react';
 import { Link } from 'react-router-dom';
+import { useState } from 'react';
+import StyledModal from '../components/StyledModal';
 
 import Header from '../components/Header';
 
@@ -136,6 +138,10 @@ const blogPosts = [
 
 const UserDashboard = () => {
   const user = useAuthUser();
+  const [modal, setModal] = useState({ open: false, item: {} });
+
+  const closeModal = () => setModal({ ...modal, open: false });
+
   return (
     <>
       <Header />
@@ -174,7 +180,7 @@ const UserDashboard = () => {
                       <div key={el.id}>
                         <Icon icon="ph:article-fill" />
                         <Link to="/">{el.title}</Link>
-                        <Icon className="trash" icon="ph:trash-fill" />
+                        <Icon onClick={() => setModal({ open: true, item: { title: el.title, id: el.id } })} className="trash" icon="ph:trash-fill" />
                         <Icon icon="ph:note-pencil-fill" />
                       </div>
                     );
@@ -185,6 +191,7 @@ const UserDashboard = () => {
           </div>
         </GridContainer>
       </Main>
+      <StyledModal isOpen={modal.open} item={modal.item} closeModal={closeModal} />
     </>
   );
 };
