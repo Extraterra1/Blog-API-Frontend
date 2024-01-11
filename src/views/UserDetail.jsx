@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import { useAuthUser } from 'react-auth-kit';
 import { Icon } from '@iconify/react';
+import { Link } from 'react-router-dom';
 
 import Header from '../components/Header';
 
@@ -27,6 +28,12 @@ const Box = styled.div`
     display: flex;
     gap: 3rem;
     align-items: center;
+  }
+  & h4 {
+    font-size: 2rem;
+    font-weight: 400;
+    margin-top: 3rem;
+    text-align: center;
   }
 `;
 
@@ -64,6 +71,47 @@ const UserInfo = styled.div`
   }
 `;
 
+const PostsContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  margin-top: 5rem;
+  font-size: 2rem;
+  font-weight: 300;
+  margin-left: 3rem;
+
+  & div {
+    display: flex;
+    gap: 2rem;
+    align-items: center;
+
+    & svg {
+      font-size: 5rem;
+    }
+    & a {
+      transition: color 0.3s ease;
+    }
+    & a:hover {
+      font-weight: 400;
+      color: #fff;
+    }
+  }
+`;
+
+// TODO: Fetch blog posts
+const blogPosts = [
+  { id: 1, title: 'The Future of Artificial Intelligence: Trends and Breakthroughs' },
+  { id: 2, title: "Demystifying Blockchain: How It's Reshaping Industries" },
+  { id: 3, title: 'Exploring the Quantum Frontier: Quantum Computing Unveiled' },
+  { id: 4, title: '5G Revolution: Transforming Connectivity and Beyond' },
+  { id: 5, title: 'The Rise of Edge Computing: Enhancing Speed and Efficiency' },
+  { id: 6, title: 'Cybersecurity in the Modern Age: Strategies for a Secure Digital World' },
+  { id: 7, title: 'Augmented Reality: Bridging the Gap Between Virtual and Real' },
+  { id: 8, title: 'The Evolution of Smart Homes: A Glimpse into the Connected Future' },
+  { id: 9, title: 'Understanding Open Source: Empowering Innovation in Tech' },
+  { id: 10, title: "Tech Trends 2024: What's Hot in the World of Gadgets and Gizmos" }
+];
+
 const UserDashboard = () => {
   const user = useAuthUser();
   return (
@@ -71,25 +119,41 @@ const UserDashboard = () => {
       <Header />
       <Main>
         <GridContainer>
-          <Box>
-            <div className="title">
-              <CircleLetter>{user().username.at(0).toUpperCase()}</CircleLetter>
-              <span>{user().username}</span>
-            </div>
-            <UserInfo>
-              <div>
-                <Icon icon="ph-envelope" />
-                <span>{user().email}</span>
+          <div>
+            <Box>
+              <div className="title">
+                <CircleLetter>{user().username.at(0).toUpperCase()}</CircleLetter>
+                <span>{user().username}</span>
               </div>
-              <div>
-                <Icon icon="ph-user-list-fill" />
-                <span>{user().role}</span>
-              </div>
-            </UserInfo>
-          </Box>
+              <UserInfo>
+                <div>
+                  <Icon icon="ph-envelope" />
+                  <span>{user().email}</span>
+                </div>
+                <div>
+                  <Icon icon="ph-user-list-fill" />
+                  <span>{user().role}</span>
+                </div>
+              </UserInfo>
+            </Box>
+          </div>
           <div>
             <Box>
               <div className="title">Submitted Blog Posts</div>
+              {user().role === 'user' ? (
+                <h4>You are not an authorized author.</h4>
+              ) : (
+                <PostsContainer>
+                  {blogPosts.map((el) => {
+                    return (
+                      <div key={el.id}>
+                        <Icon icon="ph:article-fill" />
+                        <Link to="/">{el.title}</Link>
+                      </div>
+                    );
+                  })}
+                </PostsContainer>
+              )}
             </Box>
           </div>
         </GridContainer>
