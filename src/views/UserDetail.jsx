@@ -124,7 +124,7 @@ const CreatePostBtn = styled.button`
 
 // TODO: Fetch blog posts
 const blogPosts = [
-  { id: 1, title: 'The Future of Artificial Intelligence: Trends and Breakthroughs' },
+  { id: '65a01fcdfc91c61eb0f106dd', title: 'The Future of Artificial Intelligence: Trends and Breakthroughs' },
   { id: 2, title: "Demystifying Blockchain: How It's Reshaping Industries" },
   { id: 3, title: 'Exploring the Quantum Frontier: Quantum Computing Unveiled' },
   { id: 4, title: '5G Revolution: Transforming Connectivity and Beyond' },
@@ -179,7 +179,7 @@ const UserDashboard = () => {
                     return (
                       <div key={el.id}>
                         <Icon icon="ph:article-fill" />
-                        <Link to="/">{el.title}</Link>
+                        <Link to={`/posts/${el.id}`}>{el.title}</Link>
                         <Icon onClick={() => setModal({ open: true, item: { title: el.title, id: el.id } })} className="trash" icon="ph:trash-fill" />
                         <Icon icon="ph:note-pencil-fill" />
                       </div>

@@ -117,7 +117,7 @@ const LoginForm = () => {
   if (data) {
     signIn({
       token: data.token,
-      tokeType: 'Bearer',
+      tokenType: 'Bearer',
       authState: data.user,
       expiresIn: 60
     });

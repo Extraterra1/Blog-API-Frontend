@@ -3,6 +3,9 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import useAxios from 'axios-hooks';
 import { useAuthHeader } from 'react-auth-kit';
+import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-hot-toast';
+
 const CreatePostBtn = styled.button`
   font-size: 2rem;
   background-color: var(--success);
@@ -49,19 +52,52 @@ const modalStyles = {
 Modal.setAppElement('#root');
 
 const StyledModal = ({ isOpen, closeModal, item }) => {
-  const [{ data }, deletePost] = useAxios(
-    { url: `https://project-blog-api.fly.dev/api/posts/${item.id}`, method: 'DELETE', headers: { Authorization: `sds` } },
+  const authHeader = useAuthHeader();
+  const navigate = useNavigate();
+
+  const [{ data, error }, executeDelete] = useAxios(
+    { url: `https://project-blog-api.fly.dev/api/posts/${item.id}`, method: 'DELETE', headers: { Authorization: authHeader() } },
     { manual: true }
   );
-  const authHeader = useAuthHeader();
-  console.log(authHeader());
+  console.log(error);
+
+  const deletePost = async () => {
+    try {
+      await toast.promise(
+        executeDelete(),
+        {
+          loading: 'Deleting',
+          success: 'Post Deleted',
+          error: 'Something went wrong'
+        },
+        {
+          style: {
+            marginTop: '3rem',
+            fontSize: '1.5rem'
+          },
+          success: {
+            duration: 3000
+          },
+          error: {
+            duration: 5000
+          },
+          id: 'deleteAttempt'
+        }
+      );
+      closeModal();
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  // if (data) navigate(0);
 
   return (
     <Modal isOpen={isOpen} onRequestClose={closeModal} style={modalStyles}>
       <ModalContainer>
         <h1>Are you sure you want to delete "{item.title}?"</h1>
         <div className="actions">
-          <DeletePostBtn>Delete</DeletePostBtn>
+          <DeletePostBtn onClick={deletePost}>Delete</DeletePostBtn>
           <CancelBtn onClick={closeModal}>Cancel</CancelBtn>
         </div>
       </ModalContainer>
