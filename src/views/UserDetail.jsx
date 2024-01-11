@@ -85,11 +85,23 @@ const PostsContainer = styled.div`
     gap: 2rem;
     align-items: center;
 
-    & svg {
+    & svg:first-child {
       font-size: 5rem;
+    }
+    & svg:not(:first-child) {
+      cursor: pointer;
+      font-size: 2.5rem;
+      transition: all 0.3s ease;
+      &:hover {
+        transform: scale(1.1);
+      }
+    }
+    & svg.trash:hover {
+      color: var(--danger);
     }
     & a {
       transition: color 0.3s ease;
+      flex-grow: 1;
     }
     & a:hover {
       font-weight: 400;
@@ -149,6 +161,8 @@ const UserDashboard = () => {
                       <div key={el.id}>
                         <Icon icon="ph:article-fill" />
                         <Link to="/">{el.title}</Link>
+                        <Icon className="trash" icon="ph:trash-fill" />
+                        <Icon icon="ph:note-pencil-fill" />
                       </div>
                     );
                   })}
