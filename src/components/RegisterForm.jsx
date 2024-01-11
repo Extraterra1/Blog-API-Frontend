@@ -141,9 +141,9 @@ const RegisterForm = () => {
     });
   }
 
-  const handleSubmit = async (values, { setSubmitting }) => {
+  const handleSubmit = async (values, { setSubmitting, setErrors }) => {
     try {
-      toast.promise(
+      await toast.promise(
         executeRegister({ data: { username: values.username, email: values.email, password: values.password } }),
         {
           loading: 'Creating Account...',
@@ -165,6 +165,13 @@ const RegisterForm = () => {
       );
       setSubmitting(false);
     } catch (err) {
+      if (err?.response && err?.response.data.type === 'bodyValidation') {
+        const errors = {};
+        err.response.data.err.forEach((el) => {
+          errors[el.path] = el.msg;
+        });
+        setErrors(errors);
+      }
       console.log(err.message);
     }
   };
