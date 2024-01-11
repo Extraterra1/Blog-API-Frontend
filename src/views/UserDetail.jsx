@@ -29,6 +29,10 @@ const Box = styled.div`
     gap: 3rem;
     align-items: center;
   }
+  & .title.posts {
+    justify-content: space-between;
+    padding: 0 2rem;
+  }
   & h4 {
     font-size: 2rem;
     font-weight: 400;
@@ -110,6 +114,12 @@ const PostsContainer = styled.div`
   }
 `;
 
+const CreatePostBtn = styled.button`
+  font-size: 2rem;
+  background-color: var(--success);
+  border: 1px solid var(--light);
+`;
+
 // TODO: Fetch blog posts
 const blogPosts = [
   { id: 1, title: 'The Future of Artificial Intelligence: Trends and Breakthroughs' },
@@ -151,7 +161,10 @@ const UserDashboard = () => {
           </div>
           <div>
             <Box>
-              <div className="title">Submitted Blog Posts</div>
+              <div className="title posts">
+                <span>Submitted Blog Posts</span>
+                <CreatePostBtn>Add New</CreatePostBtn>
+              </div>
               {user().role === 'user' ? (
                 <h4>You are not an authorized author.</h4>
               ) : (
