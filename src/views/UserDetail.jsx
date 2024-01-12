@@ -3,8 +3,9 @@ import { useAuthUser } from 'react-auth-kit';
 import { Icon } from '@iconify/react';
 import { Link } from 'react-router-dom';
 import { useState } from 'react';
-import StyledModal from '../components/StyledModal';
+import useAxios from 'axios-hooks';
 
+import StyledModal from '../components/StyledModal';
 import Header from '../components/Header';
 
 const Main = styled.main`
@@ -139,6 +140,7 @@ const blogPosts = [
 const UserDashboard = () => {
   const user = useAuthUser();
   const [modal, setModal] = useState({ open: false, item: {} });
+  const [{ data, loading, error }] = useAxios({ url: `${import.meta.env.VITE_API_URL}/users/${user().id}/posts` });
 
   const closeModal = () => setModal({ ...modal, open: false });
 

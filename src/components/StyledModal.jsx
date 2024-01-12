@@ -54,7 +54,7 @@ const StyledModal = ({ isOpen, closeModal, item }) => {
   const authHeader = useAuthHeader();
 
   const [, executeDelete] = useAxios(
-    { url: `https://project-blog-api.fly.dev/api/posts/${item.id}`, method: 'DELETE', headers: { Authorization: authHeader() } },
+    { url: `${import.meta.env.VITE_API_URL}/posts/${item.id}`, method: 'DELETE', headers: { Authorization: authHeader() } },
     { manual: true }
   );
 

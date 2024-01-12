@@ -130,7 +130,7 @@ PasswordInput.propTypes = {
 const RegisterForm = () => {
   const signIn = useSignIn();
   const isAuthenticated = useIsAuthenticated();
-  const [{ data }, executeRegister] = useAxios({ url: 'https://project-blog-api.fly.dev/api/register', method: 'POST' }, { manual: true });
+  const [{ data }, executeRegister] = useAxios({ url: `${import.meta.env.VITE_API_URL}/register`, method: 'POST' }, { manual: true });
 
   if (data) {
     signIn({
