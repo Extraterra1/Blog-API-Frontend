@@ -4,6 +4,7 @@ import { Icon } from '@iconify/react';
 import { Link } from 'react-router-dom';
 import { useState } from 'react';
 import useAxios from 'axios-hooks';
+import { ClipLoader } from 'react-spinners';
 
 import StyledModal from '../components/StyledModal';
 import Header from '../components/Header';
@@ -173,20 +174,23 @@ const UserDashboard = () => {
                 <span>Submitted Blog Posts</span>
                 <CreatePostBtn>Add New</CreatePostBtn>
               </div>
-              {user().role === 'user' ? (
-                <h4>You are not an authorized author.</h4>
+              <ClipLoader loading={loading} />
+              {error ? <h4>Something went wrong</h4> : null}
+              {data && data.posts.length === 0 ? (
+                <h4>Nothing to see here...</h4>
               ) : (
                 <PostsContainer>
-                  {blogPosts.map((el) => {
-                    return (
-                      <div key={el.id}>
-                        <Icon icon="ph:article-fill" />
-                        <Link to={`/posts/${el.id}`}>{el.title}</Link>
-                        <Icon onClick={() => setModal({ open: true, item: { title: el.title, id: el.id } })} className="trash" icon="ph:trash-fill" />
-                        <Icon icon="ph:note-pencil-fill" />
-                      </div>
-                    );
-                  })}
+                  {data &&
+                    data.posts.map((el) => {
+                      return (
+                        <div key={el._id}>
+                          <Icon icon="ph:article-fill" />
+                          <Link to={`/posts/${el._id}`}>{el.title}</Link>
+                          <Icon onClick={() => setModal({ open: true, item: { title: el.title, id: el._id } })} className="trash" icon="ph:trash-fill" />
+                          <Icon icon="ph:note-pencil-fill" />
+                        </div>
+                      );
+                    })}
                 </PostsContainer>
               )}
             </Box>
