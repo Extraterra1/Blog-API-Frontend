@@ -58,11 +58,14 @@ const PostsGrid = styled.div`
 `;
 
 const Landing = () => {
-  const [{ data, loading, error }] = useAxios({
-    url: `${import.meta.env.VITE_API_URL}/posts`,
-    method: 'GET',
-    timeout: 10000
-  });
+  const [{ data, loading, error }] = useAxios(
+    {
+      url: `${import.meta.env.VITE_API_URL}/posts`,
+      method: 'GET',
+      timeout: 10000
+    },
+    { useCache: false }
+  );
 
   if (error) toast.error('Something went wrong while fetching blog posts');
 

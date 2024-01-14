@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import { useAuthUser } from 'react-auth-kit';
 import { Icon } from '@iconify/react';
 import { Link } from 'react-router-dom';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import useAxios from 'axios-hooks';
 import { ClipLoader } from 'react-spinners';
 
