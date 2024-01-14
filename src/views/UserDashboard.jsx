@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import { useAuthUser } from 'react-auth-kit';
 import { Icon } from '@iconify/react';
 import { Link } from 'react-router-dom';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import useAxios from 'axios-hooks';
 import { ClipLoader } from 'react-spinners';
 
@@ -140,7 +140,7 @@ const CreatePostBtn = styled.button`
 const UserDashboard = () => {
   const user = useAuthUser();
   const [modal, setModal] = useState({ open: false, item: {} });
-  const [{ data, loading, error }] = useAxios({ url: `${import.meta.env.VITE_API_URL}/users/${user().id}/posts` });
+  const [{ data, loading, error }, refetch] = useAxios({ url: `${import.meta.env.VITE_API_URL}/users/${user().id}/posts` });
 
   const closeModal = () => setModal({ ...modal, open: false });
 
@@ -173,7 +173,7 @@ const UserDashboard = () => {
                 <span>Submitted Blog Posts</span>
                 <CreatePostBtn>Add New</CreatePostBtn>
               </div>
-              <ClipLoader loading={loading} />
+              <ClipLoader loading={loading} size={100} cssOverride={{ margin: '3rem auto', display: 'block' }} color="var(--light)" />
               {error ? <h4>Something went wrong</h4> : null}
               {data && data.posts.length === 0 ? (
                 <h4>Nothing to see here...</h4>
@@ -196,7 +196,7 @@ const UserDashboard = () => {
           </div>
         </GridContainer>
       </Main>
-      <StyledModal isOpen={modal.open} item={modal.item} closeModal={closeModal} />
+      <StyledModal isOpen={modal.open} item={modal.item} closeModal={closeModal} refetchPosts={refetch} />
     </>
   );
 };

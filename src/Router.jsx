@@ -6,7 +6,7 @@ import React from 'react';
 import Landing from './views/Landing';
 import Login from './views/Login';
 import Register from './views/Register';
-import UserDashboard from './views/UserDetail';
+import UserDashboard from './views/UserDashboard';
 
 const Router = () => {
   const router = createBrowserRouter([

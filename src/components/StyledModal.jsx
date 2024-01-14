@@ -50,7 +50,7 @@ const modalStyles = {
 
 Modal.setAppElement('#root');
 
-const StyledModal = ({ isOpen, closeModal, item }) => {
+const StyledModal = ({ isOpen, closeModal, item, refetchPosts }) => {
   const authHeader = useAuthHeader();
 
   const [, executeDelete] = useAxios(
@@ -81,6 +81,7 @@ const StyledModal = ({ isOpen, closeModal, item }) => {
           id: 'deleteAttempt'
         }
       );
+      await refetchPosts();
       closeModal();
     } catch (err) {
       console.log(err);
@@ -103,7 +104,8 @@ const StyledModal = ({ isOpen, closeModal, item }) => {
 StyledModal.propTypes = {
   isOpen: PropTypes.bool,
   closeModal: PropTypes.func,
-  item: PropTypes.object
+  item: PropTypes.object,
+  refetchPosts: PropTypes.func
 };
 
 export default StyledModal;
