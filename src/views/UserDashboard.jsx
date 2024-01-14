@@ -124,19 +124,18 @@ const CreatePostBtn = styled.button`
   border: 1px solid var(--light);
 `;
 
-// TODO: Fetch blog posts
-const blogPosts = [
-  { id: '65a0204afc91c61eb0f106de', title: 'The Future of Artificial Intelligence: Trends and Breakthroughs' },
-  { id: 2, title: "Demystifying Blockchain: How It's Reshaping Industries" },
-  { id: 3, title: 'Exploring the Quantum Frontier: Quantum Computing Unveiled' },
-  { id: 4, title: '5G Revolution: Transforming Connectivity and Beyond' },
-  { id: 5, title: 'The Rise of Edge Computing: Enhancing Speed and Efficiency' },
-  { id: 6, title: 'Cybersecurity in the Modern Age: Strategies for a Secure Digital World' },
-  { id: 7, title: 'Augmented Reality: Bridging the Gap Between Virtual and Real' },
-  { id: 8, title: 'The Evolution of Smart Homes: A Glimpse into the Connected Future' },
-  { id: 9, title: 'Understanding Open Source: Empowering Innovation in Tech' },
-  { id: 10, title: "Tech Trends 2024: What's Hot in the World of Gadgets and Gizmos" }
-];
+// const blogPosts = [
+//   { id: '65a0204afc91c61eb0f106de', title: 'The Future of Artificial Intelligence: Trends and Breakthroughs' },
+//   { id: 2, title: "Demystifying Blockchain: How It's Reshaping Industries" },
+//   { id: 3, title: 'Exploring the Quantum Frontier: Quantum Computing Unveiled' },
+//   { id: 4, title: '5G Revolution: Transforming Connectivity and Beyond' },
+//   { id: 5, title: 'The Rise of Edge Computing: Enhancing Speed and Efficiency' },
+//   { id: 6, title: 'Cybersecurity in the Modern Age: Strategies for a Secure Digital World' },
+//   { id: 7, title: 'Augmented Reality: Bridging the Gap Between Virtual and Real' },
+//   { id: 8, title: 'The Evolution of Smart Homes: A Glimpse into the Connected Future' },
+//   { id: 9, title: 'Understanding Open Source: Empowering Innovation in Tech' },
+//   { id: 10, title: "Tech Trends 2024: What's Hot in the World of Gadgets and Gizmos" }
+// ];
 
 const UserDashboard = () => {
   const user = useAuthUser();

@@ -3,9 +3,9 @@ import { RequireAuth } from 'react-auth-kit';
 
 import React from 'react';
 
-import Landing from './components/Landing';
-import Login from './components/Login';
-import Register from './components/Register';
+import Landing from './views/Landing';
+import Login from './views/Login';
+import Register from './views/Register';
 import UserDashboard from './views/UserDetail';
 
 const Router = () => {

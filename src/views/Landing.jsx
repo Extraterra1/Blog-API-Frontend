@@ -3,8 +3,8 @@ import useAxios from 'axios-hooks';
 import { ClipLoader } from 'react-spinners';
 import { toast } from 'react-hot-toast';
 
-import Header from './Header';
-import Card from './Card';
+import Header from '../components/Header';
+import Card from '../components/Card';
 import heroBg from '../assets/heroBackground.jpg';
 
 const Hero = styled.section`

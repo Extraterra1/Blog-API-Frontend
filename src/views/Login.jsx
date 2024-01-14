@@ -1,5 +1,5 @@
-import Header from './Header';
-import LoginForm from './LoginForm';
+import Header from '../components/Header';
+import LoginForm from '../components/LoginForm';
 
 const Login = () => {
   return (
