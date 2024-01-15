@@ -7,6 +7,7 @@ import Landing from './views/Landing';
 import Login from './views/Login';
 import Register from './views/Register';
 import UserDashboard from './views/UserDashboard';
+import PostView from './views/PostView';
 
 const Router = () => {
   const router = createBrowserRouter([
@@ -14,6 +15,11 @@ const Router = () => {
       path: '/',
       element: <Landing />
     },
+    {
+      path: '/posts/:id',
+      element: <PostView />
+    },
+
     {
       path: '/login',
       element: <Login />
