@@ -23,6 +23,23 @@ const StyledMain = styled.main`
   background-color: #e3e3e3;
 `;
 
+const PostContainer = styled.div`
+  margin: 0 auto;
+  max-width: 110ch;
+  font-size: 2rem;
+  font-weight: 300;
+
+  & h1.title {
+    margin: 10rem 0;
+    font-size: 5rem;
+    text-align: center;
+  }
+
+  & div:nth-child(2) {
+    margin: 5rem 0;
+  }
+`;
+
 const ErrorContainer = styled.div`
   display: flex;
   flex-direction: column;
@@ -40,6 +57,11 @@ const ErrorContainer = styled.div`
 
 const GoBackBtn = styled.button`
   background-color: var(--info);
+`;
+
+const InfoContainer = styled.div`
+  display: flex;
+  justify-content: space-between;
 `;
 
 const PostView = () => {
@@ -63,6 +85,18 @@ const PostView = () => {
             <p>{error.response ? 'Post not Found' : 'Something Went Wrong'}</p>
             <GoBackBtn onClick={() => navigate(-1)}>Go Back</GoBackBtn>
           </ErrorContainer>
+        ) : null}
+        {data ? (
+          <PostContainer>
+            <h1 className="title">{data.post.title}</h1>
+            <InfoContainer>
+              <p>
+                Written by: <span>{data.post.author.username}</span>
+              </p>
+              <span>{data.post.added}</span>
+            </InfoContainer>
+            {data.post.content}
+          </PostContainer>
         ) : null}
       </StyledMain>
     </>
