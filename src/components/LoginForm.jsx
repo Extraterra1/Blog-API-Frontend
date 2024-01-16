@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import useAxios from 'axios-hooks';
 import * as Yup from 'yup';
 import { useSignIn, useIsAuthenticated } from 'react-auth-kit';
-import { Navigate, Link } from 'react-router-dom';
+import { Navigate, Link, useLocation } from 'react-router-dom';
 import { toast } from 'react-hot-toast';
 
 const FormWrapper = styled.div`
@@ -113,6 +113,7 @@ const LoginForm = () => {
   const signIn = useSignIn();
   const isAuthenticated = useIsAuthenticated();
   const [{ data }, executeLogin] = useAxios({ url: `${import.meta.env.VITE_API_URL}/login`, method: 'POST' }, { manual: true });
+  const location = useLocation();
 
   if (data) {
     signIn({
@@ -154,7 +155,7 @@ const LoginForm = () => {
 
   return (
     <>
-      {isAuthenticated() && <Navigate to="/" />}
+      {isAuthenticated() && <Navigate to={location.state ? location.state.pathname : '/'} />}
       <Formik
         initialValues={{
           username: '',
