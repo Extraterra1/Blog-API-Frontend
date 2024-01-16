@@ -1,7 +1,7 @@
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
-import { RequireAuth } from 'react-auth-kit';
 
 import React from 'react';
+import ProtectRoute from './components/ProtectRoute';
 
 import Landing from './views/Landing';
 import Login from './views/Login';
@@ -22,7 +22,11 @@ const Router = () => {
     },
     {
       path: '/posts/create',
-      element: <CreatePost />
+      element: (
+        <ProtectRoute>
+          <CreatePost />
+        </ProtectRoute>
+      )
     },
     {
       path: '/login',
@@ -35,9 +39,9 @@ const Router = () => {
     {
       path: '/user',
       element: (
-        <RequireAuth fallbackPath="/login">
+        <ProtectRoute>
           <UserDashboard />
-        </RequireAuth>
+        </ProtectRoute>
       )
     }
   ]);
