@@ -171,7 +171,9 @@ const UserDashboard = () => {
             <Box>
               <div className="title posts">
                 <span>Submitted Blog Posts</span>
-                <CreatePostBtn>Add New</CreatePostBtn>
+                <Link to="/posts/create">
+                  <CreatePostBtn>Add New</CreatePostBtn>
+                </Link>
               </div>
               <ClipLoader loading={loading} size={100} cssOverride={{ margin: '3rem auto', display: 'block' }} color="var(--light)" />
               {error ? <h4>Something went wrong</h4> : null}
