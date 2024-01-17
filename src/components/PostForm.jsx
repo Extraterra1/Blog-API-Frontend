@@ -1,6 +1,8 @@
 import styled from 'styled-components';
+import { useRef } from 'react';
 import { Formik, Form, useField } from 'formik';
 import PropTypes from 'prop-types';
+import { Editor } from '@tinymce/tinymce-react';
 
 const PostForm = () => {
   const handleSubmit = (values, { setSubmitting }) => {
@@ -13,15 +15,16 @@ const PostForm = () => {
       <Formik
         initialValues={{
           title: '',
-          imgUrl: ''
+          imgUrl: '',
+          content: ''
         }}
-        validationSchema
         onSubmit={handleSubmit}
       >
         <FormWrapper>
           <Form style={formCSS}>
             <Input label="Title" name="title" type="text" placeholder="Post Title" />
             <Input label="Image URL" name="imgUrl" type="text" placeholder="http://images.com/img.jpg" />
+            <TextEditor name="content" />
             <SubmitButton type="submit">Submit</SubmitButton>
           </Form>
         </FormWrapper>
@@ -48,6 +51,46 @@ Input.propTypes = {
   label: PropTypes.string,
   id: PropTypes.string,
   name: PropTypes.string
+};
+
+const TextEditor = ({ ...props }) => {
+  const [field, meta, helpers] = useField(props);
+
+  const handleEditorChange = (content, editor) => {
+    helpers.setValue(content);
+  };
+  const editorRef = useRef(null);
+
+  return (
+    <>
+      <FormGroup>
+        <Editor
+          {...props}
+          apiKey="2aaj0ah7mdeeesd67rg16c6jbgqqeogypmpm52umpfi98r0d"
+          onInit={(evt, editor) => (editorRef.current = editor)}
+          value={field.value}
+          init={{
+            height: 500,
+            menubar: false,
+            toolbar:
+              'undo redo | formatselect | ' +
+              'bold italic backcolor | alignleft aligncenter ' +
+              'alignright alignjustify | bullist numlist outdent indent | ' +
+              'removeformat | help',
+            content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }'
+          }}
+          onEditorChange={handleEditorChange}
+        />
+        {meta.touched && meta.error ? <ErrorMessage>{meta.error}</ErrorMessage> : null}
+      </FormGroup>
+    </>
+  );
+};
+TextEditor.propTypes = {
+  label: PropTypes.string,
+  id: PropTypes.string,
+  name: PropTypes.string,
+  ref: PropTypes.any
 };
 
 const formCSS = {
