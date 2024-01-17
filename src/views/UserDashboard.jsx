@@ -171,9 +171,11 @@ const UserDashboard = () => {
             <Box>
               <div className="title posts">
                 <span>Submitted Blog Posts</span>
-                <Link to="/posts/create">
-                  <CreatePostBtn>Add New</CreatePostBtn>
-                </Link>
+                {user().role !== 'user' ? (
+                  <Link to="/posts/create">
+                    <CreatePostBtn>Add New</CreatePostBtn>
+                  </Link>
+                ) : null}
               </div>
               <ClipLoader loading={loading} size={100} cssOverride={{ margin: '3rem auto', display: 'block' }} color="var(--light)" />
               {error ? <h4>Something went wrong</h4> : null}
