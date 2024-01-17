@@ -9,6 +9,7 @@ import Register from './views/Register';
 import UserDashboard from './views/UserDashboard';
 import PostView from './views/PostView';
 import CreatePost from './views/CreatePost';
+import EditPost from './views/EditPost';
 
 const Router = () => {
   const router = createBrowserRouter([
@@ -25,6 +26,14 @@ const Router = () => {
       element: (
         <ProtectRoute>
           <CreatePost />
+        </ProtectRoute>
+      )
+    },
+    {
+      path: '/posts/edit',
+      element: (
+        <ProtectRoute>
+          <EditPost />
         </ProtectRoute>
       )
     },
