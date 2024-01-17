@@ -1,18 +1,51 @@
 import styled from 'styled-components';
-import { useRef } from 'react';
 import { Formik, Form, useField } from 'formik';
 import PropTypes from 'prop-types';
 import { Editor } from '@tinymce/tinymce-react';
 import * as Yup from 'yup';
+import useAxios from 'axios-hooks';
+import { useAuthHeader, useAuthUser } from 'react-auth-kit';
+import toast from 'react-hot-toast';
+import { Navigate } from 'react-router-dom';
 
 const PostForm = () => {
-  const handleSubmit = (values, { setSubmitting }) => {
-    console.log(values);
+  const authHeader = useAuthHeader();
+  const user = useAuthUser();
+
+  const [{ data, error }, submitPost] = useAxios(
+    { url: `${import.meta.env.VITE_API_URL}/posts/create`, method: 'POST', headers: { Authorization: authHeader() } },
+    { manual: true }
+  );
+
+  if (error) console.log(error);
+
+  const handleSubmit = async (values, { setSubmitting }) => {
+    await toast.promise(
+      submitPost({ data: { title: values.title, content: values.content, author: user().id } }),
+      {
+        loading: 'Submitting Post...',
+        success: 'Post Created! Redirecting...',
+        error: 'Something went wrong'
+      },
+      {
+        style: {
+          marginTop: '3rem',
+          fontSize: '1.5rem'
+        },
+        success: {
+          duration: 3000
+        },
+        error: {
+          duration: 5000
+        }
+      }
+    );
     setSubmitting(false);
   };
 
   return (
     <>
+      {data ? <Navigate to={`/posts/${data.newPost._id}`} /> : null}
       <Formik
         initialValues={{
           title: '',
@@ -65,7 +98,6 @@ const TextEditor = ({ ...props }) => {
   const handleEditorChange = (content, editor) => {
     helpers.setValue(content);
   };
-  const editorRef = useRef(null);
 
   return (
     <>
@@ -73,7 +105,6 @@ const TextEditor = ({ ...props }) => {
         <Editor
           {...props}
           apiKey="2aaj0ah7mdeeesd67rg16c6jbgqqeogypmpm52umpfi98r0d"
-          onInit={(evt, editor) => (editorRef.current = editor)}
           value={field.value}
           init={{
             height: 500,
@@ -92,6 +123,7 @@ const TextEditor = ({ ...props }) => {
     </>
   );
 };
+
 TextEditor.propTypes = {
   label: PropTypes.string,
   id: PropTypes.string,
