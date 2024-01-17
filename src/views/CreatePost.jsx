@@ -3,6 +3,7 @@ import { useAuthUser } from 'react-auth-kit';
 import { Navigate } from 'react-router-dom';
 
 import Header from '../components/Header';
+import PostForm from '../components/PostForm';
 
 const Main = styled.main`
   background-color: #e3e3e3;
@@ -15,7 +16,9 @@ const CreatePost = () => {
     <>
       {user().role === 'user' ? <Navigate to="/user" /> : null}
       <Header />
-      <Main />
+      <Main>
+        <PostForm />
+      </Main>
     </>
   );
 };
