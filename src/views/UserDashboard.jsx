@@ -141,7 +141,7 @@ const UserDashboard = () => {
   const user = useAuthUser();
   const navigate = useNavigate();
   const [modal, setModal] = useState({ open: false, item: {} });
-  const [{ data, loading, error }, refetch] = useAxios({ url: `${import.meta.env.VITE_API_URL}/users/${user().id}/posts` });
+  const [{ data, loading, error }, refetch] = useAxios({ url: `${import.meta.env.VITE_API_URL}/users/${user().id}/posts` }, { useCache: false });
 
   const closeModal = () => setModal({ ...modal, open: false });
 
