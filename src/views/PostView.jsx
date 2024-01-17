@@ -28,6 +28,7 @@ const PostContainer = styled.div`
   max-width: 110ch;
   font-size: 2rem;
   font-weight: 300;
+  word-wrap: break-word;
 
   & h1.title {
     margin: 10rem 0;
