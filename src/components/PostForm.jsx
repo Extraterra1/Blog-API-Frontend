@@ -12,12 +12,10 @@ const PostForm = () => {
   const authHeader = useAuthHeader();
   const user = useAuthUser();
 
-  const [{ data, error }, submitPost] = useAxios(
+  const [{ data }, submitPost] = useAxios(
     { url: `${import.meta.env.VITE_API_URL}/posts/create`, method: 'POST', headers: { Authorization: authHeader() } },
     { manual: true }
   );
-
-  if (error) console.log(error);
 
   const handleSubmit = async (values, { setSubmitting }) => {
     await toast.promise(
@@ -61,6 +59,7 @@ const PostForm = () => {
       >
         <FormWrapper>
           <Form style={formCSS}>
+            <Title>Create Post</Title>
             <Input label="Title" name="title" type="text" placeholder="Post Title" />
             <Input label="Image URL" name="imgUrl" type="text" placeholder="http://images.com/img.jpg" />
             <TextEditor name="content" />
@@ -114,7 +113,7 @@ const TextEditor = ({ ...props }) => {
               'bold italic backcolor | alignleft aligncenter ' +
               'alignright alignjustify | bullist numlist outdent indent | ' +
               'removeformat | help',
-            content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }'
+            content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px;}'
           }}
           onEditorChange={handleEditorChange}
         />
@@ -138,7 +137,7 @@ const formCSS = {
   borderRadius: '.5rem',
   display: 'flex',
   flexDirection: 'column',
-  alignItems: 'center'
+  minWidth: '70%'
 };
 
 const FormWrapper = styled.div`
@@ -146,6 +145,7 @@ const FormWrapper = styled.div`
   place-items: center;
   height: 100%;
   background-color: #3e3e3e;
+  padding: 3rem;
 `;
 
 const FormGroup = styled.div`
@@ -170,6 +170,13 @@ const FormGroup = styled.div`
     font-weight: 300;
     min-width: 30rem;
   }
+
+  & > .tox {
+    border: 1px solid var(--dark);
+    border-radius: 0.25rem;
+    color: var(--dark);
+    overflow: hidden;
+  }
 `;
 
 const ErrorMessage = styled.div`
@@ -182,6 +189,13 @@ const SubmitButton = styled.button`
   font-size: 1.5rem;
   align-self: center;
   margin-top: 2rem;
+  background-color: var(--success);
+`;
+
+const Title = styled.h1`
+  font-size: 5rem;
+  margin-bottom: 3rem;
+  text-align: center;
 `;
 
 const imgRegex =
