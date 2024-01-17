@@ -8,7 +8,7 @@ import { useAuthHeader, useAuthUser } from 'react-auth-kit';
 import toast from 'react-hot-toast';
 import { Navigate } from 'react-router-dom';
 
-const PostForm = () => {
+const PostForm = ({ post }) => {
   const authHeader = useAuthHeader();
   const user = useAuthUser();
 
@@ -46,9 +46,9 @@ const PostForm = () => {
       {data ? <Navigate to={`/posts/${data.newPost._id}`} /> : null}
       <Formik
         initialValues={{
-          title: '',
+          title: post ? post.title : '',
           imgUrl: '',
-          content: ''
+          content: post ? post.content : ''
         }}
         validationSchema={Yup.object({
           title: Yup.string().required('Required'),
@@ -59,7 +59,7 @@ const PostForm = () => {
       >
         <FormWrapper>
           <Form style={formCSS}>
-            <Title>Create Post</Title>
+            <Title>{post ? 'Edit Post' : 'Create Post'}</Title>
             <Input label="Title" name="title" type="text" placeholder="Post Title" />
             <Input label="Image URL" name="imgUrl" type="text" placeholder="http://images.com/img.jpg" />
             <TextEditor name="content" />
@@ -69,6 +69,10 @@ const PostForm = () => {
       </Formik>
     </>
   );
+};
+
+PostForm.propTypes = {
+  post: PropTypes.obj
 };
 
 export default PostForm;
