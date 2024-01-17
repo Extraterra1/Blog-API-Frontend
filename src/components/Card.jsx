@@ -24,7 +24,7 @@ const CardContainer = styled.div`
 
   & > .content {
     display: grid;
-    grid-template-rows: 40rem auto auto;
+    grid-template-rows: 40rem min-content min-content;
     height: 100%;
     max-width: 40rem;
     gap: 2rem;
