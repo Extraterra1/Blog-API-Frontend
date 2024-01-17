@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { useAuthUser } from 'react-auth-kit';
 import { Icon } from '@iconify/react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import useAxios from 'axios-hooks';
 import { ClipLoader } from 'react-spinners';
@@ -139,6 +139,7 @@ const CreatePostBtn = styled.button`
 
 const UserDashboard = () => {
   const user = useAuthUser();
+  const navigate = useNavigate();
   const [modal, setModal] = useState({ open: false, item: {} });
   const [{ data, loading, error }, refetch] = useAxios({ url: `${import.meta.env.VITE_API_URL}/users/${user().id}/posts` });
 
@@ -190,7 +191,7 @@ const UserDashboard = () => {
                           <Icon icon="ph:article-fill" />
                           <Link to={`/posts/${el._id}`}>{el.title}</Link>
                           <Icon onClick={() => setModal({ open: true, item: { title: el.title, id: el._id } })} className="trash" icon="ph:trash-fill" />
-                          <Icon icon="ph:note-pencil-fill" />
+                          <Icon onClick={() => navigate('/edit', { state: { post: el } })} icon="ph:note-pencil-fill" />
                         </div>
                       );
                     })}
