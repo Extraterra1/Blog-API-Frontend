@@ -3,6 +3,7 @@ import { useRef } from 'react';
 import { Formik, Form, useField } from 'formik';
 import PropTypes from 'prop-types';
 import { Editor } from '@tinymce/tinymce-react';
+import * as Yup from 'yup';
 
 const PostForm = () => {
   const handleSubmit = (values, { setSubmitting }) => {
@@ -18,6 +19,11 @@ const PostForm = () => {
           imgUrl: '',
           content: ''
         }}
+        validationSchema={Yup.object({
+          title: Yup.string().required('Required'),
+          imgUrl: Yup.string().required('Required').matches(imgRegex, 'Please enter a valid image URL'),
+          content: Yup.string().required('Required').min(30, 'Post body must be at least 30 characters long.')
+        })}
         onSubmit={handleSubmit}
       >
         <FormWrapper>
@@ -145,3 +151,6 @@ const SubmitButton = styled.button`
   align-self: center;
   margin-top: 2rem;
 `;
+
+const imgRegex =
+  /(https:\/\/www\.|http:\/\/www\.|https:\/\/|http:\/\/)?[a-zA-Z]{2,}(\.[a-zA-Z]{2,})(\.[a-zA-Z]{2,})?\/[a-zA-Z0-9]{2,}|((https:\/\/www\.|http:\/\/www\.|https:\/\/|http:\/\/)?[a-zA-Z]{2,}(\.[a-zA-Z]{2,})(\.[a-zA-Z]{2,})?)|(https:\/\/www\.|http:\/\/www\.|https:\/\/|http:\/\/)?[a-zA-Z0-9]{2,}\.[a-zA-Z0-9]{2,}\.[a-zA-Z0-9]{2,}(\.[a-zA-Z0-9]{2,})?/g;
