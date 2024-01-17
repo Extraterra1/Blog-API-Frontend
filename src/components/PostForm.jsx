@@ -6,45 +6,54 @@ import * as Yup from 'yup';
 import useAxios from 'axios-hooks';
 import { useAuthHeader, useAuthUser } from 'react-auth-kit';
 import toast from 'react-hot-toast';
-import { Navigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import he from 'he';
 
 const PostForm = ({ post }) => {
   const authHeader = useAuthHeader();
   const user = useAuthUser();
+  const navigate = useNavigate();
 
-  const [{ data }, submitPost] = useAxios(
-    { url: `${import.meta.env.VITE_API_URL}/posts/create`, method: 'POST', headers: { Authorization: authHeader() } },
-    { manual: true }
-  );
+  const [, submitPost] = useAxios({ method: 'POST', headers: { Authorization: authHeader() } }, { manual: true });
 
   const handleSubmit = async (values, { setSubmitting }) => {
-    await toast.promise(
-      submitPost({ data: { title: values.title, content: values.content, author: user().id } }),
-      {
-        loading: 'Submitting Post...',
-        success: 'Post Created! Redirecting...',
-        error: 'Something went wrong'
-      },
-      {
-        style: {
-          marginTop: '3rem',
-          fontSize: '1.5rem'
-        },
-        success: {
-          duration: 3000
-        },
-        error: {
-          duration: 5000
-        }
+    try {
+      if (!post) {
+        const response = await toast.promise(
+          submitPost({ data: { title: values.title, content: values.content, author: user().id }, url: `${import.meta.env.VITE_API_URL}/posts/create` }),
+          {
+            loading: 'Submitting Post...',
+            success: 'Post Created! Redirecting...',
+            error: 'Something went wrong'
+          },
+          toastOptions
+        );
+        setSubmitting(false);
+        return navigate(`/posts/${response.data.newPost._id}`);
       }
-    );
-    setSubmitting(false);
+
+      await toast.promise(
+        submitPost({
+          data: { title: values.title, content: values.content, author: user().id },
+          url: `${import.meta.env.VITE_API_URL}/posts/${post._id}`,
+          method: 'PATCH'
+        }),
+        {
+          loading: 'Editing Post...',
+          success: 'Post Edited! Redirecting...',
+          error: 'Something went wrong'
+        },
+        toastOptions
+      );
+      setSubmitting(false);
+      navigate(`/posts/${post._id}`);
+    } catch (err) {
+      console.error(err.message);
+    }
   };
 
   return (
     <>
-      {data ? <Navigate to={`/posts/${data.newPost._id}`} /> : null}
       <Formik
         initialValues={{
           title: post ? post.title : '',
@@ -202,3 +211,16 @@ const Title = styled.h1`
 
 const imgRegex =
   /(https:\/\/www\.|http:\/\/www\.|https:\/\/|http:\/\/)?[a-zA-Z]{2,}(\.[a-zA-Z]{2,})(\.[a-zA-Z]{2,})?\/[a-zA-Z0-9]{2,}|((https:\/\/www\.|http:\/\/www\.|https:\/\/|http:\/\/)?[a-zA-Z]{2,}(\.[a-zA-Z]{2,})(\.[a-zA-Z]{2,})?)|(https:\/\/www\.|http:\/\/www\.|https:\/\/|http:\/\/)?[a-zA-Z0-9]{2,}\.[a-zA-Z0-9]{2,}\.[a-zA-Z0-9]{2,}(\.[a-zA-Z0-9]{2,})?/g;
+
+const toastOptions = {
+  style: {
+    marginTop: '3rem',
+    fontSize: '1.5rem'
+  },
+  success: {
+    duration: 3000
+  },
+  error: {
+    duration: 5000
+  }
+};
