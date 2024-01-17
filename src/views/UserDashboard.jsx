@@ -191,7 +191,7 @@ const UserDashboard = () => {
                           <Icon icon="ph:article-fill" />
                           <Link to={`/posts/${el._id}`}>{el.title}</Link>
                           <Icon onClick={() => setModal({ open: true, item: { title: el.title, id: el._id } })} className="trash" icon="ph:trash-fill" />
-                          <Icon onClick={() => navigate('/edit', { state: { post: el } })} icon="ph:note-pencil-fill" />
+                          <Icon onClick={() => navigate('/posts/edit', { state: { post: el } })} icon="ph:note-pencil-fill" />
                         </div>
                       );
                     })}

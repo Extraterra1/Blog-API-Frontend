@@ -7,6 +7,7 @@ import useAxios from 'axios-hooks';
 import { useAuthHeader, useAuthUser } from 'react-auth-kit';
 import toast from 'react-hot-toast';
 import { Navigate } from 'react-router-dom';
+import he from 'he';
 
 const PostForm = ({ post }) => {
   const authHeader = useAuthHeader();
@@ -48,7 +49,7 @@ const PostForm = ({ post }) => {
         initialValues={{
           title: post ? post.title : '',
           imgUrl: '',
-          content: post ? post.content : ''
+          content: ''
         }}
         validationSchema={Yup.object({
           title: Yup.string().required('Required'),
@@ -62,7 +63,7 @@ const PostForm = ({ post }) => {
             <Title>{post ? 'Edit Post' : 'Create Post'}</Title>
             <Input label="Title" name="title" type="text" placeholder="Post Title" />
             <Input label="Image URL" name="imgUrl" type="text" placeholder="http://images.com/img.jpg" />
-            <TextEditor name="content" />
+            <TextEditor content={post ? post.content : null} name="content" />
             <SubmitButton type="submit">Submit</SubmitButton>
           </Form>
         </FormWrapper>
@@ -72,7 +73,7 @@ const PostForm = ({ post }) => {
 };
 
 PostForm.propTypes = {
-  post: PropTypes.obj
+  post: PropTypes.object
 };
 
 export default PostForm;
@@ -95,9 +96,8 @@ Input.propTypes = {
   name: PropTypes.string
 };
 
-const TextEditor = ({ ...props }) => {
+const TextEditor = ({ content, ...props }) => {
   const [field, meta, helpers] = useField(props);
-
   const handleEditorChange = (content, editor) => {
     helpers.setValue(content);
   };
@@ -109,6 +109,7 @@ const TextEditor = ({ ...props }) => {
           {...props}
           apiKey="2aaj0ah7mdeeesd67rg16c6jbgqqeogypmpm52umpfi98r0d"
           value={field.value}
+          onInit={(evt, editor) => (content ? editor.setContent(he.decode(content)) : null)}
           init={{
             height: 500,
             menubar: false,
@@ -128,10 +129,7 @@ const TextEditor = ({ ...props }) => {
 };
 
 TextEditor.propTypes = {
-  label: PropTypes.string,
-  id: PropTypes.string,
-  name: PropTypes.string,
-  ref: PropTypes.any
+  content: PropTypes.string
 };
 
 const formCSS = {
