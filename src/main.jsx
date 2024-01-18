@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import Router from './router.jsx';
+import Router from './Router.jsx';
 import { AuthProvider } from 'react-auth-kit';
 
 import WebFont from 'webfontloader';
