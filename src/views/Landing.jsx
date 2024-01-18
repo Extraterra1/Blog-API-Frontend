@@ -26,6 +26,9 @@ const Hero = styled.section`
 
 const PostsContainer = styled.section`
   padding: 3rem 8rem;
+  @media (max-width: 450px) {
+    padding: 3rem;
+  }
 `;
 
 const PostsHeader = styled.div`
@@ -35,12 +38,12 @@ const PostsHeader = styled.div`
   margin-bottom: 3rem;
 
   & h4 {
-    font-size: 2rem;
+    font-size: 4rem;
     font-weight: 700;
   }
 
   & p {
-    font-size: 1.3rem;
+    font-size: 2rem;
     font-weight: 400;
   }
 `;
