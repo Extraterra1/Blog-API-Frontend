@@ -21,6 +21,9 @@ const Hero = styled.section`
     font-size: 5rem;
     color: var(--light);
     border-radius: 0.5rem;
+    @media (max-width: 450px) {
+      text-align: center;
+    }
   }
 `;
 

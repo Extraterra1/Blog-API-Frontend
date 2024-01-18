@@ -24,6 +24,7 @@ const StyledMain = styled.main`
   font-size: 1.5rem;
   display: grid;
   background-color: #e3e3e3;
+  padding: 0 3rem;
   padding-bottom: 5rem;
 `;
 
@@ -38,6 +39,10 @@ const PostContainer = styled.div`
     margin: 10rem 0;
     font-size: 5rem;
     text-align: center;
+    @media (max-width: 450px) {
+      font-size: 4rem;
+      text-align: center;
+    }
   }
 
   & div:nth-child(2) {
