@@ -21,6 +21,10 @@ const GridContainer = styled.div`
   grid-template-columns: repeat(auto-fit, minmax(70rem, 1fr));
 
   gap: 5rem;
+
+  @media (max-width: 750px) {
+    grid-template-columns: repeat(auto-fit, minmax(35rem, 1fr));
+  }
 `;
 
 const Box = styled.div`
@@ -89,18 +93,32 @@ const PostsContainer = styled.div`
   font-weight: 300;
   margin-left: 3rem;
 
+  @media (max-width: 450px) {
+    gap: 3rem;
+  }
+
   & div {
     display: flex;
     gap: 2rem;
     align-items: center;
 
+    @media (max-width: 450px) {
+      display: grid;
+      grid-template-columns: 1fr auto auto;
+      gap: 1rem;
+    }
+
     & svg:first-child {
       font-size: 5rem;
+      @media (max-width: 450px) {
+        display: none;
+      }
     }
     & svg:not(:first-child) {
       cursor: pointer;
       font-size: 2.5rem;
       transition: all 0.3s ease;
+
       &:hover {
         transform: scale(1.1);
       }
@@ -123,6 +141,9 @@ const CreatePostBtn = styled.button`
   font-size: 2rem;
   background-color: var(--success);
   border: 1px solid var(--light);
+  @media (max-width: 450px) {
+    min-width: 12ch;
+  }
 `;
 
 // const blogPosts = [
@@ -172,7 +193,7 @@ const UserDashboard = () => {
           <div>
             <Box>
               <div className="title posts">
-                <span>Submitted Blog Posts</span>
+                <span>Submitted Posts</span>
                 {user().role !== 'user' ? (
                   <Link to="/posts/create">
                     <CreatePostBtn>Add New</CreatePostBtn>
