@@ -6,6 +6,7 @@ import styled from 'styled-components';
 import useAxios from 'axios-hooks';
 import he from 'he';
 import parse from 'html-react-parser';
+import moment from 'moment';
 
 import Header from '../components/Header';
 
@@ -23,6 +24,7 @@ const StyledMain = styled.main`
   font-size: 1.5rem;
   display: grid;
   background-color: #e3e3e3;
+  padding-bottom: 5rem;
 `;
 
 const PostContainer = styled.div`
@@ -101,7 +103,7 @@ const PostView = () => {
               <p>
                 Written by: <span>{data.post.author.username}</span>
               </p>
-              <span>{data.post.added}</span>
+              <span>{moment(data.post.added).format('MMM D, YYYY')}</span>
             </InfoContainer>
             <PostBody>{parse(he.decode(data.post.content))}</PostBody>
           </PostContainer>
