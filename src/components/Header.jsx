@@ -20,6 +20,9 @@ const HeaderContainer = styled.nav`
   & > *:hover {
     color: var(--dark-hover);
   }
+  @media (max-width: 450px) {
+    padding: 2rem 3rem;
+  }
 `;
 
 const ButtonsContainer = styled.div`
