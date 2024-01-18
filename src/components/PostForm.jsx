@@ -56,7 +56,7 @@ const PostForm = ({ post }) => {
     <>
       <Formik
         initialValues={{
-          title: post ? post.title : '',
+          title: post ? he.decode(post.title) : '',
           imgUrl: '',
           content: ''
         }}

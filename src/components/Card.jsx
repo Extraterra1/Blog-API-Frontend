@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
+import he from 'he';
 
 import testImg from '../assets/heroBackground.jpg';
 
@@ -69,6 +70,9 @@ const CardContainer = styled.div`
 `;
 
 const Card = ({ post }) => {
+  let content = he.decode(he.decode(post.content)).replace(/<[^>]+>/g, '');
+  if (content.length > 300) content = content.slice(0, 300) + '...';
+
   return (
     <CardContainer>
       <div className="content">
@@ -77,11 +81,11 @@ const Card = ({ post }) => {
         </div>
         <div className="title">
           <Link to={`/posts/${post._id}`}>
-            <h2>{post.title}</h2>
+            <h2>{he.decode(post.title)}</h2>
           </Link>
         </div>
         <div className="desc">
-          <p>{post.content}</p>
+          <p>{content}</p>
         </div>
       </div>
     </CardContainer>
