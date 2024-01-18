@@ -4,6 +4,8 @@ import { ClipLoader } from 'react-spinners';
 import { Icon } from '@iconify/react';
 import styled from 'styled-components';
 import useAxios from 'axios-hooks';
+import he from 'he';
+import parse from 'html-react-parser';
 
 import Header from '../components/Header';
 
@@ -65,11 +67,16 @@ const InfoContainer = styled.div`
   justify-content: space-between;
 `;
 
+const PostBody = styled.div`
+  display: grid;
+  gap: 2rem;
+`;
+
 const PostView = () => {
   const params = useParams();
   const navigate = useNavigate();
 
-  const [{ data, loading, error }] = useAxios({ url: `${import.meta.env.VITE_API_URL}/posts/${params.id}`, method: 'GET' });
+  const [{ data, loading, error }] = useAxios({ url: `${import.meta.env.VITE_API_URL}/posts/${params.id}`, method: 'GET' }, { useCache: false });
 
   useEffect(() => {
     if (!validatePostId(params.id)) return navigate('/');
@@ -89,14 +96,14 @@ const PostView = () => {
         ) : null}
         {data ? (
           <PostContainer>
-            <h1 className="title">{data.post.title}</h1>
+            <h1 className="title">{he.decode(data.post.title)}</h1>
             <InfoContainer>
               <p>
                 Written by: <span>{data.post.author.username}</span>
               </p>
               <span>{data.post.added}</span>
             </InfoContainer>
-            {data.post.content}
+            <PostBody>{parse(he.decode(data.post.content))}</PostBody>
           </PostContainer>
         ) : null}
       </StyledMain>
