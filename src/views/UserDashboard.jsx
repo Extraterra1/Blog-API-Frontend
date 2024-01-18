@@ -5,6 +5,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import useAxios from 'axios-hooks';
 import { ClipLoader } from 'react-spinners';
+import he from 'he';
 
 import StyledModal from '../components/StyledModal';
 import Header from '../components/Header';
@@ -189,8 +190,12 @@ const UserDashboard = () => {
                       return (
                         <div key={el._id}>
                           <Icon icon="ph:article-fill" />
-                          <Link to={`/posts/${el._id}`}>{el.title}</Link>
-                          <Icon onClick={() => setModal({ open: true, item: { title: el.title, id: el._id } })} className="trash" icon="ph:trash-fill" />
+                          <Link to={`/posts/${el._id}`}>{he.decode(el.title)}</Link>
+                          <Icon
+                            onClick={() => setModal({ open: true, item: { title: he.decode(el.title), id: el._id } })}
+                            className="trash"
+                            icon="ph:trash-fill"
+                          />
                           <Icon onClick={() => navigate('/posts/edit', { state: { post: el } })} icon="ph:note-pencil-fill" />
                         </div>
                       );
