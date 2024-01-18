@@ -12,6 +12,16 @@ const FormWrapper = styled.div`
   place-items: center;
   height: 100%;
   background-color: #3e3e3e;
+
+  @media (max-width: 450px) {
+    align-items: start;
+    padding: 10rem 3rem;
+
+    & form {
+      justify-content: center;
+      grid-auto-rows: 1fr;
+    }
+  }
 `;
 
 const FormGroup = styled.div`
