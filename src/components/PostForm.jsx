@@ -20,7 +20,10 @@ const PostForm = ({ post }) => {
     try {
       if (!post) {
         const response = await toast.promise(
-          submitPost({ data: { title: values.title, content: values.content, author: user().id }, url: `${import.meta.env.VITE_API_URL}/posts/create` }),
+          submitPost({
+            data: { title: values.title, content: values.content, author: user().id, imgUrl: values.imgUrl },
+            url: `${import.meta.env.VITE_API_URL}/posts/create`
+          }),
           {
             loading: 'Submitting Post...',
             success: 'Post Created! Redirecting...',
@@ -34,7 +37,7 @@ const PostForm = ({ post }) => {
 
       await toast.promise(
         submitPost({
-          data: { title: values.title, content: values.content, author: user().id },
+          data: { title: values.title, content: values.content, author: user().id, imgUrl: values.imgUrl },
           url: `${import.meta.env.VITE_API_URL}/posts/${post._id}`,
           method: 'PATCH'
         }),
