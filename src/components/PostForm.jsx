@@ -60,7 +60,7 @@ const PostForm = ({ post }) => {
       <Formik
         initialValues={{
           title: post ? he.decode(post.title) : '',
-          imgUrl: '',
+          imgUrl: post ? post.imgUrl : '',
           content: ''
         }}
         validationSchema={Yup.object({
