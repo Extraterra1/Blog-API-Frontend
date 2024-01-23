@@ -2,8 +2,43 @@ import styled from 'styled-components';
 import { Formik, Form, useField } from 'formik';
 import PropTypes from 'prop-types';
 import * as Yup from 'yup';
+import { useAuthUser, useAuthHeader } from 'react-auth-kit';
+import useAxios from 'axios-hooks';
+import { BeatLoader } from 'react-spinners';
+import toast from 'react-hot-toast';
+import { useParams } from 'react-router-dom';
 
 const CommentsBox = () => {
+  const authHeader = useAuthHeader();
+  const user = useAuthUser();
+  const params = useParams();
+
+  const [{ loading }, saveComment] = useAxios(
+    {
+      method: 'POST',
+      headers: { Authorization: authHeader() },
+      url: `${import.meta.env.VITE_API_URL}/comments/create`
+    },
+    { manual: true }
+  );
+
+  const handleSubmit = async (values, { setSubmitting }) => {
+    try {
+      await toast.promise(
+        saveComment({ data: { content: values.content, author: user().id, post: params.id } }),
+        {
+          loading: 'Publishing Comment...',
+          success: 'Comment Published!',
+          error: 'Something went wrong'
+        },
+        toastOptions
+      );
+      setSubmitting(false);
+    } catch (err) {
+      console.error(err.message);
+    }
+  };
+
   return (
     <>
       <Formik
@@ -13,11 +48,11 @@ const CommentsBox = () => {
         validationSchema={Yup.object({
           content: Yup.string().required('Required')
         })}
-        // onSubmit={handleSubmit}
+        onSubmit={handleSubmit}
       >
         <Form>
           <TextArea id="content" label="Leave your comment" name="content" type="text" placeholder="Tell us what you think" />
-          <SubmitButton type="submit">Publish</SubmitButton>
+          <SubmitButton type="submit">{loading ? <BeatLoader color="var(--light)" size={10} loading={loading} /> : 'Publish'}</SubmitButton>
         </Form>
       </Formik>
     </>
@@ -27,13 +62,15 @@ const CommentsBox = () => {
 export default CommentsBox;
 
 const TextArea = ({ label, ...props }) => {
+  const user = useAuthUser();
+
   const [field, meta] = useField(props);
   return (
     <>
       <FormGroup>
         <label htmlFor={props.id || props.name}>{label}</label>
         <Wrapper>
-          <CircleLetter>A</CircleLetter>
+          <CircleLetter>{user().username.slice(0, 1).toUpperCase()}</CircleLetter>
           <textarea {...field} {...props} />
         </Wrapper>
         {meta.touched && meta.error ? <ErrorMessage>{meta.error}</ErrorMessage> : null}
@@ -51,9 +88,11 @@ const Wrapper = styled.div`
   display: flex;
   gap: 2rem;
   margin: 1rem 0 !important;
+  align-items: center;
 
   & textarea {
     flex-grow: 1;
+    align-self: stretch;
   }
 `;
 
@@ -92,6 +131,8 @@ const FormGroup = styled.div`
     font-family: 'Oswald';
     font-weight: 300;
     min-width: 30rem;
+    font-size: 1.5rem;
+    resize: none;
   }
 
   & > .tox {
@@ -114,3 +155,16 @@ const SubmitButton = styled.button`
   align-self: center;
   background-color: var(--success);
 `;
+
+const toastOptions = {
+  style: {
+    marginTop: '3rem',
+    fontSize: '1.5rem'
+  },
+  success: {
+    duration: 3000
+  },
+  error: {
+    duration: 5000
+  }
+};
