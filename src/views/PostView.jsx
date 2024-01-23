@@ -9,6 +9,7 @@ import parse from 'html-react-parser';
 import moment from 'moment';
 
 import Header from '../components/Header';
+import Comments from '../components/Comments';
 
 const validatePostId = (value) => {
   const regex = /^[a-fA-F0-9]{24}$/;
@@ -128,6 +129,7 @@ const PostView = () => {
               <span>{moment(data.post.added).format('MMM D, YYYY')}</span>
             </InfoContainer>
             <PostBody>{parse(he.decode(data.post.content))}</PostBody>
+            <Comments comments={data.post.comments} />
           </PostContainer>
         ) : null}
       </StyledMain>
