@@ -5,7 +5,9 @@ import { useIsAuthenticated } from 'react-auth-kit';
 import CommentsBox from './CommentsBox';
 
 const Container = styled.div`
-  /* margin-top: 0rem; */
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
 `;
 
 const Comments = ({ comments }) => {
