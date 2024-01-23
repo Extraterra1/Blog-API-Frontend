@@ -72,11 +72,25 @@ const GoBackBtn = styled.button`
 const InfoContainer = styled.div`
   display: flex;
   justify-content: space-between;
+  margin: 5rem 0;
 `;
 
 const PostBody = styled.div`
   display: grid;
   gap: 2rem;
+`;
+
+const ImageContainer = styled.div`
+  display: flex;
+  justify-content: center;
+
+  & img {
+    object-fit: cover;
+    object-position: 50% 25%;
+    width: 100%;
+    border-radius: 0.5rem;
+    max-height: 40vh;
+  }
 `;
 
 const PostView = () => {
@@ -104,9 +118,12 @@ const PostView = () => {
         {data ? (
           <PostContainer>
             <h1 className="title">{he.decode(data.post.title)}</h1>
+            <ImageContainer>
+              <img src={data.post.imgUrl} />
+            </ImageContainer>
             <InfoContainer>
               <p>
-                Written by: <span>{data.post.author.username}</span>
+                Written by: <strong>{data.post.author.username}</strong>
               </p>
               <span>{moment(data.post.added).format('MMM D, YYYY')}</span>
             </InfoContainer>
