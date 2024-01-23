@@ -129,7 +129,7 @@ const PostView = () => {
               <span>{moment(data.post.added).format('MMM D, YYYY')}</span>
             </InfoContainer>
             <PostBody>{parse(he.decode(data.post.content))}</PostBody>
-            <Comments comments={data.post.comments} />
+            <Comments commentsArr={data.post.comments} />
           </PostContainer>
         ) : null}
       </StyledMain>

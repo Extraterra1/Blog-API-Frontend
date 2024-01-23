@@ -8,7 +8,7 @@ import { BeatLoader } from 'react-spinners';
 import toast from 'react-hot-toast';
 import { useParams } from 'react-router-dom';
 
-const CommentsBox = () => {
+const CommentsBox = ({ setComments }) => {
   const authHeader = useAuthHeader();
   const user = useAuthUser();
   const params = useParams();
@@ -24,7 +24,7 @@ const CommentsBox = () => {
 
   const handleSubmit = async (values, { setSubmitting }) => {
     try {
-      await toast.promise(
+      const response = await toast.promise(
         saveComment({ data: { content: values.content, author: user().id, post: params.id } }),
         {
           loading: 'Publishing Comment...',
@@ -33,6 +33,8 @@ const CommentsBox = () => {
         },
         toastOptions
       );
+      setComments((prevState) => [response.data.newComment, ...prevState]);
+
       setSubmitting(false);
     } catch (err) {
       console.error(err.message);
@@ -57,6 +59,10 @@ const CommentsBox = () => {
       </Formik>
     </>
   );
+};
+
+CommentsBox.propTypes = {
+  setComments: PropTypes.func
 };
 
 export default CommentsBox;
