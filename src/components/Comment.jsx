@@ -2,13 +2,34 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import moment from 'moment';
 import { Icon } from '@iconify/react';
-import { useIsAuthenticated, useAuthUser } from 'react-auth-kit';
+import { useIsAuthenticated, useAuthUser, useAuthHeader } from 'react-auth-kit';
 import { useState } from 'react';
+import toast from 'react-hot-toast';
+import useAxios from 'axios-hooks';
 
 const Comment = ({ comment }) => {
   const isAuthenticated = useIsAuthenticated();
   const user = useAuthUser();
+  const authHeader = useAuthHeader();
   const [isLiked, setIsLiked] = useState(comment.likes.includes(user().id));
+  const [, sendLike] = useAxios(
+    { url: `${import.meta.env.VITE_API_URL}/comments/${comment._id}/like`, headers: { Authorization: authHeader() } },
+    { manual: true }
+  );
+
+  const handleLikeToggle = async () => {
+    try {
+      if (isLiked) {
+        await sendLike({ method: 'DELETE' });
+      } else {
+        await sendLike({ method: 'PATCH' });
+      }
+      setIsLiked(!isLiked);
+    } catch (err) {
+      toast.error('Something went wrong');
+      console.log(err);
+    }
+  };
 
   return (
     <>
@@ -20,7 +41,7 @@ const Comment = ({ comment }) => {
           </p>
           {isAuthenticated() ? (
             <div className="actions">
-              <Icon className="like-icon" icon={isLiked ? 'ph-heart-fill' : 'ph-heart'} color={isLiked ? 'var(--danger)' : null} />
+              <Icon onClick={handleLikeToggle} className="like-icon" icon={isLiked ? 'ph-heart-fill' : 'ph-heart'} color={isLiked ? 'var(--danger)' : null} />
               {isAuthenticated() && user().id === comment.author._id ? <Icon className="edit-icon" icon="ph:pencil" /> : null}
             </div>
           ) : null}
