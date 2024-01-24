@@ -8,7 +8,7 @@ import { BeatLoader } from 'react-spinners';
 import toast from 'react-hot-toast';
 import { useParams } from 'react-router-dom';
 
-const CommentsBox = ({ setComments }) => {
+const InsertCommentForm = ({ setComments }) => {
   const authHeader = useAuthHeader();
   const user = useAuthUser();
   const params = useParams();
@@ -63,11 +63,11 @@ const CommentsBox = ({ setComments }) => {
   );
 };
 
-CommentsBox.propTypes = {
+InsertCommentForm.propTypes = {
   setComments: PropTypes.func
 };
 
-export default CommentsBox;
+export default InsertCommentForm;
 
 const TextArea = ({ label, ...props }) => {
   const user = useAuthUser();

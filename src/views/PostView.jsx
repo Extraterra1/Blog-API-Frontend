@@ -45,10 +45,6 @@ const PostContainer = styled.div`
       text-align: center;
     }
   }
-
-  & div:nth-child(2) {
-    margin: 5rem 0;
-  }
 `;
 
 const ErrorContainer = styled.div`

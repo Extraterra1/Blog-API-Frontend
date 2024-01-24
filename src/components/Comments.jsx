@@ -3,7 +3,8 @@ import PropTypes from 'prop-types';
 import { useIsAuthenticated } from 'react-auth-kit';
 import { useState } from 'react';
 
-import CommentsBox from './CommentsBox';
+import InsertCommentForm from './InsertCommentForm';
+import Comment from './Comment';
 
 const Container = styled.div`
   display: flex;
@@ -21,9 +22,9 @@ const Comments = ({ commentsArr }) => {
         <div className="title">
           <h2>{comments.length === 0 ? 'No comments yet, be the first!' : comments.length === 1 ? '1 Comment' : `${comments.length} Comments`}</h2>
         </div>
-        {isAuthenticated() ? <CommentsBox setComments={setComments} /> : null}
+        {isAuthenticated() ? <InsertCommentForm setComments={setComments} /> : null}
         {comments.map((e) => (
-          <p key={e._id}>{e.content}</p>
+          <Comment key={e._id} comment={e} />
         ))}
       </Container>
     </>
