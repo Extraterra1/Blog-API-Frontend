@@ -22,7 +22,7 @@ const InsertCommentForm = ({ setComments }) => {
     { manual: true }
   );
 
-  const handleSubmit = async (values, { setSubmitting }) => {
+  const handleSubmit = async (values, { setSubmitting, resetForm }) => {
     try {
       const response = await toast.promise(
         saveComment({ data: { content: values.content, author: user().id, post: params.id } }),
@@ -36,6 +36,7 @@ const InsertCommentForm = ({ setComments }) => {
       setComments((prevState) => [response.data.newComment, ...prevState]);
 
       setSubmitting(false);
+      resetForm();
     } catch (err) {
       console.error(err.message);
     }

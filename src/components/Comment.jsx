@@ -11,7 +11,7 @@ const Comment = ({ comment }) => {
   const isAuthenticated = useIsAuthenticated();
   const user = useAuthUser();
   const authHeader = useAuthHeader();
-  const [isLiked, setIsLiked] = useState(comment.likes.includes(user().id));
+  const [isLiked, setIsLiked] = useState(isAuthenticated() && comment.likes.includes(user().id));
   const [, sendLike] = useAxios(
     { url: `${import.meta.env.VITE_API_URL}/comments/${comment._id}/like`, headers: { Authorization: authHeader() } },
     { manual: true }
