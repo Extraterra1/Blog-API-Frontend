@@ -3,10 +3,12 @@ import styled from 'styled-components';
 import moment from 'moment';
 import { Icon } from '@iconify/react';
 import { useIsAuthenticated, useAuthUser } from 'react-auth-kit';
+import { useState } from 'react';
 
 const Comment = ({ comment }) => {
   const isAuthenticated = useIsAuthenticated();
   const user = useAuthUser();
+  const [isLiked, setIsLiked] = useState(comment.likes.includes(user().id));
 
   return (
     <>
@@ -18,11 +20,7 @@ const Comment = ({ comment }) => {
           </p>
           {isAuthenticated() ? (
             <div className="actions">
-              <Icon
-                className="like-icon"
-                icon={comment.likes.includes(user().id) ? 'ph-heart-fill' : 'ph-heart'}
-                color={comment.likes.includes(user().id) ? 'var(--danger)' : null}
-              />
+              <Icon className="like-icon" icon={isLiked ? 'ph-heart-fill' : 'ph-heart'} color={isLiked ? 'var(--danger)' : null} />
               {isAuthenticated() && user().id === comment.author._id ? <Icon className="edit-icon" icon="ph:pencil" /> : null}
             </div>
           ) : null}
