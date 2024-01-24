@@ -51,6 +51,8 @@ const CommentsBox = ({ setComments }) => {
           content: Yup.string().required('Required')
         })}
         onSubmit={handleSubmit}
+        validateOnChange={false}
+        validateOnBlur={false}
       >
         <Form>
           <TextArea id="content" label="Leave your comment" name="content" type="text" placeholder="Tell us what you think" />
