@@ -23,7 +23,7 @@ const Comment = ({ comment }) => {
                 icon={comment.likes.includes(user().id) ? 'ph-heart-fill' : 'ph-heart'}
                 color={comment.likes.includes(user().id) ? 'var(--danger)' : null}
               />
-              <Icon className="edit-icon" icon="ph:pencil" />
+              {isAuthenticated() && user().id === comment.author._id ? <Icon className="edit-icon" icon="ph:pencil" /> : null}
             </div>
           ) : null}
         </div>
