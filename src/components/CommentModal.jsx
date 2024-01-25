@@ -28,6 +28,21 @@ const CommentModal = ({ isOpen, closeModal, comment, setComments }) => {
         return comments.map((e) => (e._id === res.data.updatedComment._id ? res.data.updatedComment : e));
       });
       toast.success('Comment Saved');
+      setSubmitting(false);
+      closeModal();
+    } catch (err) {
+      toast.error('Something went wrong');
+      console.log(err);
+    }
+  };
+
+  const handleDelete = async () => {
+    try {
+      const res = await updateComment({ method: 'DELETE' });
+      setComments((comments) => {
+        return comments.filter((e) => e._id !== res.data.deletedComment._id);
+      });
+      toast.success('Comment Deleted');
       closeModal();
     } catch (err) {
       toast.error('Something went wrong');
@@ -53,7 +68,7 @@ const CommentModal = ({ isOpen, closeModal, comment, setComments }) => {
             <TextArea id="content" label="Edit Comment" name="content" type="text" placeholder="Tell us what you think" />
             <div className="actions">
               <CreateBtn type="submit">{loading ? <BeatLoader color="var(--light)" size={10} loading={loading} /> : 'Save'}</CreateBtn>
-              <DeleteBtn type="button" onClick={() => console.log('xd')}>
+              <DeleteBtn type="button" onClick={handleDelete}>
                 Delete
               </DeleteBtn>
               <CancelBtn type="button" onClick={closeModal}>
