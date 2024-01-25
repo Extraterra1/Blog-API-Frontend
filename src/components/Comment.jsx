@@ -6,6 +6,7 @@ import { useIsAuthenticated, useAuthUser, useAuthHeader } from 'react-auth-kit';
 import { useState } from 'react';
 import toast from 'react-hot-toast';
 import useAxios from 'axios-hooks';
+import he from 'he';
 
 import CommentModal from './CommentModal';
 
@@ -53,7 +54,7 @@ const Comment = ({ comment, setComments }) => {
             </div>
           ) : null}
         </div>
-        <p className="content">{comment.content}</p>
+        <p className="content">{he.decode(comment.content)}</p>
       </Container>
       <CommentModal isOpen={modal.open} closeModal={closeModal} comment={modal.comment} setComments={setComments} />
     </>
