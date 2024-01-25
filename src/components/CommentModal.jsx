@@ -6,12 +6,30 @@ import { useAuthHeader } from 'react-auth-kit';
 import { Formik, Form, useField } from 'formik';
 import * as Yup from 'yup';
 import he from 'he';
+import toast from 'react-hot-toast';
 
 Modal.setAppElement('#root');
 
 const CommentModal = ({ isOpen, closeModal, comment, setComments }) => {
-  const handleSubmit = () => {
-    console.log('xd');
+  const authHeader = useAuthHeader();
+  const [{ loading }, editComment] = useAxios(
+    {
+      url: `${import.meta.env.VITE_API_URL}/comments/${comment._id}`,
+      method: 'PATCH',
+      headers: { Authorization: authHeader() }
+    },
+    { manual: true }
+  );
+
+  const handleSubmit = async (values, { setSubmitting }) => {
+    try {
+      const updatedComment = await editComment({ data: { content: values.content } });
+      toast.success('Comment Saved');
+      closeModal();
+    } catch (err) {
+      toast.error('Something went wrong');
+      console.log(err);
+    }
   };
 
   return (
