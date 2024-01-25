@@ -3,19 +3,45 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import useAxios from 'axios-hooks';
 import { useAuthHeader } from 'react-auth-kit';
+import { Formik, Form, useField } from 'formik';
+import * as Yup from 'yup';
+import he from 'he';
 
 Modal.setAppElement('#root');
 
 const CommentModal = ({ isOpen, closeModal, comment, setComments }) => {
+  const handleSubmit = () => {
+    console.log('xd');
+  };
+
   return (
     <Modal isOpen={isOpen} onRequestClose={closeModal} style={modalStyles}>
       <ModalContainer>
-        <h1>Edit Comment"</h1>
-        <div className="actions">
-          <CreateBtn onClick={closeModal}>Save</CreateBtn>
-          <DeleteBtn onClick={() => console.log('xd')}>Delete</DeleteBtn>
-          <CancelBtn onClick={closeModal}>Cancel</CancelBtn>
-        </div>
+        <Formik
+          initialValues={{
+            content: comment.content ? he.decode(comment.content) : ''
+          }}
+          validationSchema={Yup.object({
+            content: Yup.string().required('Required')
+          })}
+          onSubmit={handleSubmit}
+          validateOnChange={false}
+          validateOnBlur={false}
+        >
+          <Form>
+            <TextArea id="content" label="Edit Comment" name="content" type="text" placeholder="Tell us what you think" />
+            <div className="actions">
+              <CreateBtn type="submit">Save</CreateBtn>
+              <DeleteBtn type="button" onClick={() => console.log('xd')}>
+                Delete
+              </DeleteBtn>
+              <CancelBtn type="button" onClick={closeModal}>
+                Cancel
+              </CancelBtn>
+            </div>
+            {/* <SubmitButton type="submit">{loading ? <BeatLoader color="var(--light)" size={10} loading={loading} /> : 'Publish'}</SubmitButton> */}
+          </Form>
+        </Formik>
       </ModalContainer>
     </Modal>
   );
@@ -25,7 +51,7 @@ CommentModal.propTypes = {
   isOpen: PropTypes.bool,
   closeModal: PropTypes.func,
   comment: PropTypes.object,
-  setComments: PropTypes.array
+  setComments: PropTypes.func
 };
 
 export default CommentModal;
@@ -71,3 +97,75 @@ const modalStyles = {
     transform: 'translate(-50%, -50%)'
   }
 };
+
+const TextArea = ({ label, ...props }) => {
+  const [field, meta] = useField(props);
+  return (
+    <>
+      <FormGroup>
+        <label htmlFor={props.id || props.name}>{label}</label>
+        <Wrapper>
+          <textarea {...field} {...props} />
+        </Wrapper>
+        {meta.touched && meta.error ? <ErrorMessage>{meta.error}</ErrorMessage> : null}
+      </FormGroup>
+    </>
+  );
+};
+TextArea.propTypes = {
+  label: PropTypes.string,
+  id: PropTypes.string,
+  name: PropTypes.string
+};
+
+const Wrapper = styled.div`
+  display: flex;
+  gap: 2rem;
+  margin: 1rem 0 !important;
+  align-items: center;
+
+  & textarea {
+    flex-grow: 1;
+    align-self: stretch;
+  }
+`;
+const FormGroup = styled.div`
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 2rem;
+  font-family: 'Oswald';
+  letter-spacing: 1px;
+  gap: 0.5rem;
+
+  & label {
+    font-size: 1.7rem;
+  }
+
+  & input,
+  & textarea {
+    background-color: #fff;
+    padding: 1rem 2rem;
+    border: 1px solid var(--dark);
+    border-radius: 0.25rem;
+    color: var(--dark);
+    font-family: 'Oswald';
+    font-weight: 300;
+    min-width: 30rem;
+    font-size: 1.5rem;
+    resize: none;
+  }
+
+  & > .tox {
+    border: 1px solid var(--dark);
+    border-radius: 0.25rem;
+    color: var(--dark);
+    overflow: hidden;
+  }
+`;
+
+const ErrorMessage = styled.div`
+  color: var(--danger);
+  font-size: 1.2rem;
+  font-weight: 500;
+  text-align: center;
+`;
