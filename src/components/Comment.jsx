@@ -7,15 +7,20 @@ import { useState } from 'react';
 import toast from 'react-hot-toast';
 import useAxios from 'axios-hooks';
 
-const Comment = ({ comment }) => {
+import CommentModal from './CommentModal';
+
+const Comment = ({ comment, setComments }) => {
   const isAuthenticated = useIsAuthenticated();
   const user = useAuthUser();
   const authHeader = useAuthHeader();
   const [isLiked, setIsLiked] = useState(isAuthenticated() && comment.likes.includes(user().id));
+  const [modal, setModal] = useState({ open: false, comment: {} });
   const [, sendLike] = useAxios(
     { url: `${import.meta.env.VITE_API_URL}/comments/${comment._id}/like`, headers: { Authorization: authHeader() } },
     { manual: true }
   );
+
+  const closeModal = () => setModal({ ...modal, open: false });
 
   const handleLikeToggle = async () => {
     try {
@@ -42,18 +47,22 @@ const Comment = ({ comment }) => {
           {isAuthenticated() ? (
             <div className="actions">
               <Icon onClick={handleLikeToggle} className="like-icon" icon={isLiked ? 'ph-heart-fill' : 'ph-heart'} color={isLiked ? 'var(--danger)' : null} />
-              {isAuthenticated() && user().id === comment.author._id ? <Icon className="edit-icon" icon="ph:pencil" /> : null}
+              {isAuthenticated() && (user().id === comment.author._id || user().role === 'author') ? (
+                <Icon onClick={() => setModal({ ...modal, open: true })} className="edit-icon" icon="ph:pencil" />
+              ) : null}
             </div>
           ) : null}
         </div>
         <p className="content">{comment.content}</p>
       </Container>
+      <CommentModal isOpen={modal.open} closeModal={closeModal} comment={modal.comment} setComments={setComments} />
     </>
   );
 };
 
 Comment.propTypes = {
-  comment: PropTypes.object
+  comment: PropTypes.object,
+  setComments: PropTypes.func
 };
 
 export default Comment;

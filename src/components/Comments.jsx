@@ -24,7 +24,7 @@ const Comments = ({ commentsArr }) => {
         </div>
         {isAuthenticated() ? <InsertCommentForm setComments={setComments} /> : null}
         {comments.map((e) => (
-          <Comment key={e._id} comment={e} />
+          <Comment key={e._id} comment={e} setComments={setComments} />
         ))}
       </Container>
     </>
