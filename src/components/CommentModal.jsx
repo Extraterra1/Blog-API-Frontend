@@ -7,6 +7,7 @@ import { Formik, Form, useField } from 'formik';
 import * as Yup from 'yup';
 import he from 'he';
 import toast from 'react-hot-toast';
+import { BeatLoader } from 'react-spinners';
 
 Modal.setAppElement('#root');
 
@@ -49,7 +50,7 @@ const CommentModal = ({ isOpen, closeModal, comment, setComments }) => {
           <Form>
             <TextArea id="content" label="Edit Comment" name="content" type="text" placeholder="Tell us what you think" />
             <div className="actions">
-              <CreateBtn type="submit">Save</CreateBtn>
+              <CreateBtn type="submit">{loading ? <BeatLoader color="var(--light)" size={10} loading={loading} /> : 'Save'}</CreateBtn>
               <DeleteBtn type="button" onClick={() => console.log('xd')}>
                 Delete
               </DeleteBtn>
