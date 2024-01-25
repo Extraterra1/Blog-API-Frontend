@@ -13,10 +13,9 @@ Modal.setAppElement('#root');
 
 const CommentModal = ({ isOpen, closeModal, comment, setComments }) => {
   const authHeader = useAuthHeader();
-  const [{ loading }, editComment] = useAxios(
+  const [{ loading }, updateComment] = useAxios(
     {
       url: `${import.meta.env.VITE_API_URL}/comments/${comment._id}`,
-      method: 'PATCH',
       headers: { Authorization: authHeader() }
     },
     { manual: true }
@@ -24,7 +23,10 @@ const CommentModal = ({ isOpen, closeModal, comment, setComments }) => {
 
   const handleSubmit = async (values, { setSubmitting }) => {
     try {
-      const updatedComment = await editComment({ data: { content: values.content } });
+      const res = await updateComment({ data: { content: values.content }, method: 'PATCH' });
+      setComments((comments) => {
+        return comments.map((e) => (e._id === res.data.updatedComment._id ? res.data.updatedComment : e));
+      });
       toast.success('Comment Saved');
       closeModal();
     } catch (err) {
