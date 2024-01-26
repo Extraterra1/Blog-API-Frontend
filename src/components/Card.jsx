@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import he from 'he';
+import { Icon } from '@iconify/react';
 
 import testImg from '../assets/heroBackground.jpg';
 
@@ -67,6 +68,21 @@ const CardContainer = styled.div`
       text-transform: uppercase;
     }
   }
+
+  & .comments-icon {
+    font-size: 3rem;
+    margin-top: 2rem;
+    position: relative;
+  }
+
+  & .comments-number {
+    position: absolute;
+    z-index: 10;
+    font-size: 1.5rem;
+    right: 49%;
+    top: 20%;
+    font-family: Oswald;
+  }
 `;
 
 const Card = ({ post }) => {
@@ -82,6 +98,10 @@ const Card = ({ post }) => {
         <div className="title">
           <Link to={`/posts/${post._id}`}>
             <h2>{he.decode(post.title)}</h2>
+            <div className="comments-icon">
+              <Icon icon="solar:chat-round-linear" />
+              <span className="comments-number">{post.comments.length}</span>
+            </div>
           </Link>
         </div>
         <div className="desc">
