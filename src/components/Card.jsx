@@ -73,15 +73,23 @@ const CardContainer = styled.div`
     font-size: 3rem;
     margin-top: 2rem;
     position: relative;
+    display: inline-block;
+
+    & > div {
+      display: flex;
+      align-items: center;
+    }
   }
 
   & .comments-number {
     position: absolute;
     z-index: 10;
     font-size: 1.5rem;
-    right: 49%;
-    top: 20%;
     font-family: Oswald;
+
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
   }
 `;
 
@@ -99,7 +107,9 @@ const Card = ({ post }) => {
           <Link to={`/posts/${post._id}`}>
             <h2>{he.decode(post.title)}</h2>
             <div className="comments-icon">
-              <Icon icon="solar:chat-round-linear" />
+              <div className="div">
+                <Icon icon="solar:chat-round-linear" />
+              </div>
               <span className="comments-number">{post.comments.length}</span>
             </div>
           </Link>
