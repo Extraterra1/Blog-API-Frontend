@@ -118,6 +118,15 @@ const ModalContainer = styled.div`
     margin-top: 5rem;
     display: flex;
     gap: 5rem;
+
+    @media (max-width: 450px) {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+
+      & button:nth-child(3) {
+        grid-column: span 2;
+      }
+    }
   }
 `;
 
