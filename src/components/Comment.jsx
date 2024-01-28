@@ -20,6 +20,7 @@ const Comment = ({ comment, setModal }) => {
 
   const handleLikeToggle = async () => {
     try {
+      if (!isAuthenticated()) return toast.error('You need to be logged in to leave a like!');
       if (isLiked) {
         await sendLike({ method: 'DELETE' });
       } else {
