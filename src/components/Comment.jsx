@@ -40,14 +40,13 @@ const Comment = ({ comment, setModal }) => {
             <strong>{comment.author.username} </strong>
             on {moment(comment.added).format('MMM D, YYYY')}
           </p>
-          {isAuthenticated() ? (
-            <div className="actions">
-              <Icon onClick={handleLikeToggle} className="like-icon" icon={isLiked ? 'ph-heart-fill' : 'ph-heart'} color={isLiked ? 'var(--danger)' : null} />
-              {isAuthenticated() && (user().id === comment.author._id || user().role === 'author') ? (
-                <Icon onClick={() => setModal({ open: true, comment })} className="edit-icon" icon="ph:pencil" />
-              ) : null}
-            </div>
-          ) : null}
+
+          <div className="actions">
+            <Icon onClick={handleLikeToggle} className="like-icon" icon={isLiked ? 'ph-heart-fill' : 'ph-heart'} color={isLiked ? 'var(--danger)' : null} />
+            {isAuthenticated() && (user().id === comment.author._id || user().role === 'author') ? (
+              <Icon onClick={() => setModal({ open: true, comment })} className="edit-icon" icon="ph:pencil" />
+            ) : null}
+          </div>
         </div>
         <p className="content">{he.decode(comment.content)}</p>
       </Container>
