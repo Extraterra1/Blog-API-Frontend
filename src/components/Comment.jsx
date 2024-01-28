@@ -23,8 +23,10 @@ const Comment = ({ comment, setModal }) => {
       if (!isAuthenticated()) return toast.error('You need to be logged in to leave a like!');
       if (isLiked) {
         await sendLike({ method: 'DELETE' });
+        comment.likes = comment.likes.filter((e) => e !== user().id);
       } else {
         await sendLike({ method: 'PATCH' });
+        comment.likes.push(user().id);
       }
       setIsLiked(!isLiked);
     } catch (err) {
@@ -43,7 +45,10 @@ const Comment = ({ comment, setModal }) => {
           </p>
 
           <div className="actions">
-            <Icon onClick={handleLikeToggle} className="like-icon" icon={isLiked ? 'ph-heart-fill' : 'ph-heart'} color={isLiked ? 'var(--danger)' : null} />
+            <div className="likes">
+              <span>{comment.likes.length || null}</span>
+              <Icon onClick={handleLikeToggle} className="like-icon" icon={isLiked ? 'ph-heart-fill' : 'ph-heart'} color={isLiked ? 'var(--danger)' : null} />
+            </div>
             {isAuthenticated() && (user().id === comment.author._id || user().role === 'author') ? (
               <Icon onClick={() => setModal({ open: true, comment })} className="edit-icon" icon="ph:pencil" />
             ) : null}
@@ -77,6 +82,13 @@ const Container = styled.div`
   & .actions {
     display: flex;
     gap: 2rem;
+    align-items: center;
+
+    & > .likes {
+      display: flex;
+      gap: 0.5rem;
+      align-items: center;
+    }
 
     & svg {
       cursor: pointer;
