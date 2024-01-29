@@ -10,6 +10,94 @@ import he from 'he';
 import StyledModal from '../components/StyledModal';
 import Header from '../components/Header';
 
+// const blogPosts = [
+//   { id: '65a0204afc91c61eb0f106de', title: 'The Future of Artificial Intelligence: Trends and Breakthroughs' },
+//   { id: 2, title: "Demystifying Blockchain: How It's Reshaping Industries" },
+//   { id: 3, title: 'Exploring the Quantum Frontier: Quantum Computing Unveiled' },
+//   { id: 4, title: '5G Revolution: Transforming Connectivity and Beyond' },
+//   { id: 5, title: 'The Rise of Edge Computing: Enhancing Speed and Efficiency' },
+//   { id: 6, title: 'Cybersecurity in the Modern Age: Strategies for a Secure Digital World' },
+//   { id: 7, title: 'Augmented Reality: Bridging the Gap Between Virtual and Real' },
+//   { id: 8, title: 'The Evolution of Smart Homes: A Glimpse into the Connected Future' },
+//   { id: 9, title: 'Understanding Open Source: Empowering Innovation in Tech' },
+//   { id: 10, title: "Tech Trends 2024: What's Hot in the World of Gadgets and Gizmos" }
+// ];
+
+const UserDashboard = () => {
+  const user = useAuthUser();
+  const navigate = useNavigate();
+  const [modal, setModal] = useState({ open: false, item: {} });
+  const [{ data, loading, error }, refetch] = useAxios({ url: `${import.meta.env.VITE_API_URL}/users/${user().id}/posts` }, { useCache: false });
+
+  const closeModal = () => setModal({ ...modal, open: false });
+
+  return (
+    <>
+      <Header />
+      <Main>
+        <GridContainer>
+          <div>
+            <Box>
+              <div className="title">
+                <CircleLetter>{user().username.at(0).toUpperCase()}</CircleLetter>
+                <span>{user().username}</span>
+              </div>
+              <UserInfo>
+                <div>
+                  <Icon icon="ph-envelope" />
+                  <span>{user().email}</span>
+                </div>
+                <div>
+                  <Icon icon="ph-user-list-fill" />
+                  <span>{user().role}</span>
+                </div>
+              </UserInfo>
+            </Box>
+          </div>
+          <div>
+            <Box>
+              <div className="title posts">
+                <span>Submitted Posts</span>
+                {user().role !== 'user' ? (
+                  <Link to="/posts/create">
+                    <CreatePostBtn>Add New</CreatePostBtn>
+                  </Link>
+                ) : null}
+              </div>
+              <ClipLoader loading={loading} size={100} cssOverride={{ margin: '3rem auto', display: 'block' }} color="var(--light)" />
+              {error ? <h4>Something went wrong</h4> : null}
+              {data && data.posts.length === 0 ? (
+                <h4>Nothing to see here...</h4>
+              ) : (
+                <PostsContainer>
+                  {data &&
+                    data.posts.map((el) => {
+                      return (
+                        <div key={el._id}>
+                          <Icon icon="ph:article-fill" />
+                          <Link to={`/posts/${el._id}`}>{he.decode(el.title)}</Link>
+                          <Icon
+                            onClick={() => setModal({ open: true, item: { title: he.decode(el.title), id: el._id } })}
+                            className="trash"
+                            icon="ph:trash-fill"
+                          />
+                          <Icon onClick={() => navigate('/posts/edit', { state: { post: el } })} icon="ph:note-pencil-fill" />
+                        </div>
+                      );
+                    })}
+                </PostsContainer>
+              )}
+            </Box>
+          </div>
+        </GridContainer>
+      </Main>
+      <StyledModal isOpen={modal.open} item={modal.item} closeModal={closeModal} refetchPosts={refetch} />
+    </>
+  );
+};
+
+export default UserDashboard;
+
 const Main = styled.main`
   background-color: #3e3e3e;
   color: var(--light);
@@ -145,91 +233,3 @@ const CreatePostBtn = styled.button`
     min-width: 12ch;
   }
 `;
-
-// const blogPosts = [
-//   { id: '65a0204afc91c61eb0f106de', title: 'The Future of Artificial Intelligence: Trends and Breakthroughs' },
-//   { id: 2, title: "Demystifying Blockchain: How It's Reshaping Industries" },
-//   { id: 3, title: 'Exploring the Quantum Frontier: Quantum Computing Unveiled' },
-//   { id: 4, title: '5G Revolution: Transforming Connectivity and Beyond' },
-//   { id: 5, title: 'The Rise of Edge Computing: Enhancing Speed and Efficiency' },
-//   { id: 6, title: 'Cybersecurity in the Modern Age: Strategies for a Secure Digital World' },
-//   { id: 7, title: 'Augmented Reality: Bridging the Gap Between Virtual and Real' },
-//   { id: 8, title: 'The Evolution of Smart Homes: A Glimpse into the Connected Future' },
-//   { id: 9, title: 'Understanding Open Source: Empowering Innovation in Tech' },
-//   { id: 10, title: "Tech Trends 2024: What's Hot in the World of Gadgets and Gizmos" }
-// ];
-
-const UserDashboard = () => {
-  const user = useAuthUser();
-  const navigate = useNavigate();
-  const [modal, setModal] = useState({ open: false, item: {} });
-  const [{ data, loading, error }, refetch] = useAxios({ url: `${import.meta.env.VITE_API_URL}/users/${user().id}/posts` }, { useCache: false });
-
-  const closeModal = () => setModal({ ...modal, open: false });
-
-  return (
-    <>
-      <Header />
-      <Main>
-        <GridContainer>
-          <div>
-            <Box>
-              <div className="title">
-                <CircleLetter>{user().username.at(0).toUpperCase()}</CircleLetter>
-                <span>{user().username}</span>
-              </div>
-              <UserInfo>
-                <div>
-                  <Icon icon="ph-envelope" />
-                  <span>{user().email}</span>
-                </div>
-                <div>
-                  <Icon icon="ph-user-list-fill" />
-                  <span>{user().role}</span>
-                </div>
-              </UserInfo>
-            </Box>
-          </div>
-          <div>
-            <Box>
-              <div className="title posts">
-                <span>Submitted Posts</span>
-                {user().role !== 'user' ? (
-                  <Link to="/posts/create">
-                    <CreatePostBtn>Add New</CreatePostBtn>
-                  </Link>
-                ) : null}
-              </div>
-              <ClipLoader loading={loading} size={100} cssOverride={{ margin: '3rem auto', display: 'block' }} color="var(--light)" />
-              {error ? <h4>Something went wrong</h4> : null}
-              {data && data.posts.length === 0 ? (
-                <h4>Nothing to see here...</h4>
-              ) : (
-                <PostsContainer>
-                  {data &&
-                    data.posts.map((el) => {
-                      return (
-                        <div key={el._id}>
-                          <Icon icon="ph:article-fill" />
-                          <Link to={`/posts/${el._id}`}>{he.decode(el.title)}</Link>
-                          <Icon
-                            onClick={() => setModal({ open: true, item: { title: he.decode(el.title), id: el._id } })}
-                            className="trash"
-                            icon="ph:trash-fill"
-                          />
-                          <Icon onClick={() => navigate('/posts/edit', { state: { post: el } })} icon="ph:note-pencil-fill" />
-                        </div>
-                      );
-                    })}
-                </PostsContainer>
-              )}
-            </Box>
-          </div>
-        </GridContainer>
-      </Main>
-      <StyledModal isOpen={modal.open} item={modal.item} closeModal={closeModal} refetchPosts={refetch} />
-    </>
-  );
-};
-
-export default UserDashboard;
