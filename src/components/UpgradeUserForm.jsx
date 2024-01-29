@@ -2,8 +2,25 @@ import { Formik, Form, useField } from 'formik';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import * as Yup from 'yup';
+import useAxios from 'axios-hooks';
+import { useAuthUser } from 'react-auth-kit';
+import toast from 'react-hot-toast';
 
 const UpgradeUserForm = () => {
+  const user = useAuthUser();
+  const [, executeUpgrade] = useAxios({ url: `${import.meta.env.VITE_API_URL}/users/${user().id}/upgrade`, method: 'PATCH' }, { manual: true });
+  const handleSubmit = async (values, { setSubmitting }) => {
+    try {
+      const res = await toast.promise(executeUpgrade({ data: { key: values.key } }), {
+        success: 'You are now an Author!',
+        loading: 'Upgrading...',
+        error: 'Something went wrong'
+      });
+      console.log(res);
+    } catch (err) {
+      console.log(err);
+    }
+  };
   return (
     <>
       <Formik
@@ -11,9 +28,11 @@ const UpgradeUserForm = () => {
           key: ''
         }}
         validationSchema={Yup.object({
-          key: Yup.string().required('Required')
+          key: Yup.string().equals(['supersecret'], 'Wrong Key!')
         })}
-        // onSubmit={handleSubmit}
+        validateOnBlur={false}
+        validateOnChange={false}
+        onSubmit={handleSubmit}
       >
         <FormWrapper>
           <Form>
