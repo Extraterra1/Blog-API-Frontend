@@ -29,7 +29,7 @@ const UpgradeUserForm = () => {
         authState: res.data.user,
         expiresIn: 60
       });
-      console.log(res);
+      setSubmitting(false);
     } catch (err) {
       console.log(err);
     }
