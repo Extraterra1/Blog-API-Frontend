@@ -9,6 +9,7 @@ import he from 'he';
 
 import StyledModal from '../components/StyledModal';
 import Header from '../components/Header';
+import UpgradeUserForm from '../components/UpgradeUserForm';
 
 // const blogPosts = [
 //   { id: '65a0204afc91c61eb0f106de', title: 'The Future of Artificial Intelligence: Trends and Breakthroughs' },
@@ -50,6 +51,9 @@ const UserDashboard = () => {
                 <div>
                   <Icon icon="ph-user-list-fill" />
                   <span>{user().role}</span>
+                </div>
+                <div>
+                  <UpgradeUserForm />
                 </div>
               </UserInfo>
             </Box>
