@@ -52,9 +52,11 @@ const UserDashboard = () => {
                   <Icon icon="ph-user-list-fill" />
                   <span>{user().role}</span>
                 </div>
-                <div>
-                  <UpgradeUserForm />
-                </div>
+                {user().role !== 'author' ? (
+                  <div>
+                    <UpgradeUserForm />
+                  </div>
+                ) : null}
               </UserInfo>
             </Box>
           </div>
